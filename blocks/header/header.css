@@ -1,0 +1,13 @@
+.header {
+  border-bottom: solid #545454 1px;
+  display: flex;
+  justify-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media screen and (max-width: 1180px) {
+  .header {
+    max-width: 880px;
+  }
+}
