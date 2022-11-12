@@ -1,0 +1,12 @@
+.profile {
+  display: flex;
+  align-items: center;
+  font-family: 'Inter';
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 568px) {
+  .profile {
+    flex-direction: column;
+  }
+}
