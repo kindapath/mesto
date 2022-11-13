@@ -2,7 +2,23 @@
   background-image: url('../../../images/profile__edit-btn.svg');
   background-repeat: no-repeat;
   background-position: center;
-  max-width: 24px;
-  min-height: 24px;
+  width: 24px;
+  height: 24px;
   border: 1px solid #fff;
+  background-size: 10px;
+  box-sizing: border-box;
+  transition: opacity .3s;
+}
+
+.profile__edit-btn:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 568px) {
+  .profile__edit-btn {
+    align-self: end;
+    max-width: 18px;
+    max-height: 18px;
+    background-size: 7.5px;
+  }
 }

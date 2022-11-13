@@ -4,4 +4,9 @@
   min-width: 22px;
   background-repeat: no-repeat;
   background-position: center;
+  transition: opacity .3s;
+}
+
+.element__like:hover {
+  opacity: .6;
 }

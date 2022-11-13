@@ -5,4 +5,18 @@
   min-width: 150px;
   min-height: 50px;
   border: 1px solid #fff;
+  box-sizing: border-box;
+  justify-self: end;
+  transition: opacity .3s;
+}
+
+.profile__add-btn:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 984px) {
+  .profile__add-btn {
+    width: 100%;
+    background-size: 16px;
+  }
 }
