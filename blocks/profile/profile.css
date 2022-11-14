@@ -3,6 +3,7 @@
   grid-template-columns: min-content minmax(min-content, auto) 1fr;
   width: 100%;
   align-items: center;
+  font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
 }
 
 @media screen and (max-width: 984px) {

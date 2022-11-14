@@ -8,6 +8,8 @@
   background-size: 10px;
   box-sizing: border-box;
   transition: opacity .3s;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .profile__edit-btn:hover {

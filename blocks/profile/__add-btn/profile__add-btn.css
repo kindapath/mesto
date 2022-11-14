@@ -8,6 +8,8 @@
   box-sizing: border-box;
   justify-self: end;
   transition: opacity .3s;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 .profile__add-btn:hover {
