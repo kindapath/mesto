@@ -1,4 +1,7 @@
 .popup {
+  box-sizing: border-box;
+  padding-left: 19px;
+  padding-right: 19px;
   display: none;
   flex-direction: column;
   justify-content: center;

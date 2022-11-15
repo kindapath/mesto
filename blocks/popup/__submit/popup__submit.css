@@ -9,12 +9,14 @@
   background-color: #000;
   transition: opacity .3s;
   cursor: pointer;
-  margin: 0 36px 0;
+  border-radius: 2px;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 568px) {
   .popup__submit {
-    margin: 0 22px 25px;
     font-size: 14px;
     line-height: 17px;
   }

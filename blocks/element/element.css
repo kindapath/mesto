@@ -3,8 +3,6 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   overflow: hidden;
   font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
 }

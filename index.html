@@ -17,15 +17,16 @@
 
   <section class="popup">
 
+    <button class="popup__toggle">
+      <img class="popup__toggle-image" src="./images/popup__close-icon.svg" alt="Иконка закрытия">
+    </button>
     <form class="popup__container">
-      <button class="popup__toggle">
-        <img class="popup__toggle-image" src="./images/popup__close-icon.svg" alt="Иконка закрытия">
-      </button>
       <h2 class="popup__text">Редактировать профиль</h2>
       <input class="popup__input popup__name" type="text" name="name" id="name" placeholder="Имя" autofocus>
       <input class="popup__input popup__job" type="text" name="job" id="job" placeholder="Описание">
       <button class="popup__submit" type="submit">Сохранить</button>
     </form>
+
 
   </section>
 
@@ -34,7 +35,7 @@
     <section class="profile content__profile">
       <img class="profile__avatar" src="./images/profile__avatar.jpg" alt="Фотография профиля">
       <div class="profile__info">
-        <p class="profile__name">Жак-Ив Кусто</p>
+        <h1 class="profile__name">Жак-Ив Кусто</h1>
         <button class="profile__edit-btn"></button>
         <p class="profile__job">Исследователь океана</p>
       </div>

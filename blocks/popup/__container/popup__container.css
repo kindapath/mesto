@@ -7,13 +7,14 @@
   flex-direction: column;
   border-radius: 10px;
   box-sizing: border-box;
+  padding: 34px 36px;
 }
 
 @media screen and (max-width: 568px) {
   .popup__container {
-    box-sizing: border-box;
+    padding: 25px 22px;
     min-width: 282px;
+    width: 100%;
     min-height: 322px;
-    margin: 0 19px 0;
   }
 }
