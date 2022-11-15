@@ -10,6 +10,7 @@
   transition: opacity .3s;
   background-color: transparent;
   cursor: pointer;
+  padding: 0;
 }
 
 .profile__edit-btn:hover {
