@@ -29,6 +29,9 @@ const elementsBlock = page.querySelector('.elements');
 // Находим темплейт карточки
 const cardTemplate = page.querySelector('#element-template').content;
 
+// Находим иконку удаления
+
+
 // Массив карточек
 const initialCards = [
   {
@@ -88,6 +91,8 @@ function formSubmitHandler(evt) {
 // Добавляем и заполняем карточки из массива
 initialCards.forEach(function (card) {
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+  const cardLikeButton = cardElement.querySelector('.element__like');
+  const cardRemoveButton = cardElement.querySelector('.element__remove');
 
   cardElement.querySelector('.element__title').textContent = card.name;
   cardElement.querySelector('.element__image').alt = card.name;
@@ -95,11 +100,14 @@ initialCards.forEach(function (card) {
 
   elementsBlock.append(cardElement);
 
-  const cardLikeButton = cardElement.querySelector('.element__like');
-
   cardLikeButton.addEventListener('click', function(event){
     event.target.classList.toggle('element__like_active')
   });
+
+  cardRemoveButton.addEventListener('click', function(){
+    cardElement.remove()
+  });
+
 });
 
 
@@ -112,8 +120,8 @@ popupToggle.addEventListener('click', popupClose);
 // Прикрепляем обработчик к кнопке сохранения
 formElement.addEventListener('submit', formSubmitHandler);
 
+//Удаляем карточку
 
-// 6 карточек из коробки
 
 
 
