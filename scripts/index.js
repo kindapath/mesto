@@ -17,6 +17,9 @@ const jobInput = formElement.querySelector('.popup__input_field_job')
 // Находим попап в DOM
 const popup = page.querySelector('.popup');
 
+// Находим попап с картинкой в дом
+const popupPic = page.querySelector('.popup-pic');
+
 // Находим кнопку редактирвания
 const editButton = page.querySelector('.profile__edit-btn');
 
@@ -28,8 +31,6 @@ const elementsBlock = page.querySelector('.elements');
 
 // Находим темплейт карточки
 const cardTemplate = page.querySelector('#element-template').content;
-
-// Находим иконку удаления
 
 
 // Массив карточек
@@ -67,15 +68,28 @@ function inputTextInsert() {
   jobInput.value = profileJob.textContent;
 }
 
-// Открываем форму
+function popupPicInsert() {
+
+}
+
+// Открываем форму изменения профиля
 function popupOpen() {
   popup.classList.add('popup_opened');
   inputTextInsert()
 }
 
+// Открываем попап с картинкой
+function popupPicOpen(card) {
+  popupPic.classList.add('popup-pic_opened');
+}
+
 // Закрываем форму
 function popupClose() {
   popup.classList.remove('popup_opened');
+}
+
+function popupPicClose() {
+  popup.classList.remove('popup-pic_opened');
 }
 
 // Обработчик «отправки» формы
@@ -88,25 +102,36 @@ function formSubmitHandler(evt) {
   popupClose()
 }
 
-// Добавляем и заполняем карточки из массива
+// Операции с карточкой
 initialCards.forEach(function (card) {
+
+  // Копируем содержимое
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+
+  // Находим кнопки лайка,удаления и изображение
   const cardLikeButton = cardElement.querySelector('.element__like');
   const cardRemoveButton = cardElement.querySelector('.element__remove');
+  const cardImage = cardElement.querySelector('.element__image');
 
+  // Добавляем карточки из массива
   cardElement.querySelector('.element__title').textContent = card.name;
   cardElement.querySelector('.element__image').alt = card.name;
   cardElement.querySelector('.element__image').src = card.link;
 
   elementsBlock.append(cardElement);
 
+  // Лайкаем карточку
   cardLikeButton.addEventListener('click', function(event){
     event.target.classList.toggle('element__like_active')
   });
 
+  // Удаляем карточку
   cardRemoveButton.addEventListener('click', function(){
     cardElement.remove()
   });
+
+  // Прикрепляем обработчик к картинке
+  cardImage.addEventListener('click', popupPicOpen);
 
 });
 
@@ -120,7 +145,6 @@ popupToggle.addEventListener('click', popupClose);
 // Прикрепляем обработчик к кнопке сохранения
 formElement.addEventListener('submit', formSubmitHandler);
 
-//Удаляем карточку
 
 
 

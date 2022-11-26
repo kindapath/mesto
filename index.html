@@ -27,6 +27,18 @@
       <button class="popup__submit" type="submit">Сохранить</button>
     </form>
 
+  </section>
+
+  <section class="popup-pic">
+
+    <button class="popup-pic__toggle">
+      <img class="popup-pic__toggle-image" src="./images/popup__close-icon.svg" alt="Иконка закрытия">
+    </button>
+
+    <div class="popup-pic__container">
+      <img class="popup-pic__image" src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg" alt="">
+      <p class="popup-pic__title">Камчатка</p>
+    </div>
 
   </section>
 
@@ -46,6 +58,9 @@
       <template id="element-template">
         <div class="element">
           <img class="element__image" src="" alt="">
+          <button class="element__remove">
+            <img class="element__remove-image" src="./images/element__remove.svg" alt="Иконка удаления">
+          </button>
           <div class="element__description">
             <p class="element__title"></p>
             <div class="element__like"></div>
