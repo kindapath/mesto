@@ -10,6 +10,9 @@ const profile = page.querySelector('.profile')
 const profileName = profile.querySelector('.profile__name')
 const profileJob = profile.querySelector('.profile__job')
 
+// Находим кнопку добавления карточки
+const profileAddButton = profile.querySelector('.profile__add-btn');
+
 // Находим поля формы в DOM
 const nameInput = formElement.querySelector('.popup__input_field_name')
 const jobInput = formElement.querySelector('.popup__input_field_job')
@@ -20,9 +23,13 @@ const popup = page.querySelector('.popup');
 // Находим попап с картинкой в дом
 const popupPic = page.querySelector('.popup-pic');
 
+// Находим попап формы добавления
+const popupAdd = page.querySelector('.popup-add');
+
 // Находим изображение в блоке попапа с картинкой
 const popupPicImage = popupPic.querySelector('.popup-pic__image');
 
+// Находим название в блоке попапа с картинкой
 const popupPicTitle = popupPic.querySelector('.popup-pic__title');
 
 // Находим кнопку редактирвания
@@ -33,6 +40,9 @@ const popupToggle = page.querySelector('.popup__toggle');
 
 // Находим кнопку закрытия попапа с картинкой
 const popupPicToggle = popupPic.querySelector('.popup-pic__toggle')
+
+// Находим кнопку закрытия попапа добавления карточки
+const popupAddToggle = popupAdd.querySelector('.popup-add__toggle')
 
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
@@ -87,13 +97,24 @@ function popupPicOpen() {
   popupPic.classList.add('popup-pic_opened');
 }
 
+// Открываем попап добавления карточки
+function popupAddOpen() {
+  popupAdd.classList.add('popup-add_opened');
+}
+
 // Закрываем форму
 function popupClose() {
   popup.classList.remove('popup_opened');
 }
 
+// Закрываем попап с картинкой
 function popupPicClose() {
   popupPic.classList.remove('popup-pic_opened');
+}
+
+// Закртываем попап добавления карточки
+function popupAddClose() {
+  popupAdd.classList.remove('popup-add_opened');
 }
 
 // Обработчик «отправки» формы
@@ -147,15 +168,20 @@ initialCards.forEach(function (card) {
 // Прикрепляем обработчик к кнопке редактирования
 editButton.addEventListener('click', popupOpen);
 
+// Прикрепляем обработчик к кнопке доавления карточки
+profileAddButton.addEventListener('click', popupAddOpen);
+
 // Прикрепляем обработчик к кнопке закрытия
 popupToggle.addEventListener('click', popupClose);
 
 // Прикрепляем обработчик к кнопке закрытия попапа с картинкой
 popupPicToggle.addEventListener('click', popupPicClose);
 
+// Прикрепляем обработчик к кнопке закрытия попапа добавления карточки
+popupAddToggle.addEventListener('click', popupAddClose);
+
 // Прикрепляем обработчик к кнопке сохранения
 formElement.addEventListener('submit', formSubmitHandler);
-
 
 
 
