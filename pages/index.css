@@ -34,6 +34,18 @@
 @import url('../blocks/popup/__toggle-image/popup__toggle-image.css');
 @import url('../blocks/popup/__toggle/popup__toggle.css');
 
+/* block popup-add */
+@import url('../blocks/popup-add/popup-add.css');
+@import url('../blocks/popup-add/_opened/popup-add_opened.css');
+@import url('../blocks/popup-add/__container/popup-add__container.css');
+@import url('../blocks/popup-add/__input/popup-add__input.css');
+@import url('../blocks/popup-add/__input/_field/popup-add__input_field_name.css');
+@import url('../blocks/popup-add/__input/_field/popup-add__input_field_link.css');
+@import url('../blocks/popup-add/__submit/popup-add__submit.css');
+@import url('../blocks/popup-add/__text/popup-add__text.css');
+@import url('../blocks/popup-add/__toggle-image/popup-add__toggle-image.css');
+@import url('../blocks/popup-add/__toggle/popup-add__toggle.css');
+
 /* block popup-pic */
 @import url('../blocks/popup-pic/popup-pic.css');
 @import url('../blocks/popup-pic/__container/popup-pic__container.css');
