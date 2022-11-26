@@ -20,11 +20,19 @@ const popup = page.querySelector('.popup');
 // Находим попап с картинкой в дом
 const popupPic = page.querySelector('.popup-pic');
 
+// Находим изображение в блоке попапа с картинкой
+const popupPicImage = popupPic.querySelector('.popup-pic__image');
+
+const popupPicTitle = popupPic.querySelector('.popup-pic__title');
+
 // Находим кнопку редактирвания
 const editButton = page.querySelector('.profile__edit-btn');
 
 // Находим кнопку закрытия
 const popupToggle = page.querySelector('.popup__toggle');
+
+// Находим кнопку закрытия попапа с картинкой
+const popupPicToggle = popupPic.querySelector('.popup-pic__toggle')
 
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
@@ -68,10 +76,6 @@ function inputTextInsert() {
   jobInput.value = profileJob.textContent;
 }
 
-function popupPicInsert() {
-
-}
-
 // Открываем форму изменения профиля
 function popupOpen() {
   popup.classList.add('popup_opened');
@@ -79,7 +83,7 @@ function popupOpen() {
 }
 
 // Открываем попап с картинкой
-function popupPicOpen(card) {
+function popupPicOpen() {
   popupPic.classList.add('popup-pic_opened');
 }
 
@@ -89,7 +93,7 @@ function popupClose() {
 }
 
 function popupPicClose() {
-  popup.classList.remove('popup-pic_opened');
+  popupPic.classList.remove('popup-pic_opened');
 }
 
 // Обработчик «отправки» формы
@@ -131,7 +135,11 @@ initialCards.forEach(function (card) {
   });
 
   // Прикрепляем обработчик к картинке
-  cardImage.addEventListener('click', popupPicOpen);
+  cardImage.addEventListener('click', function () {
+    popupPicOpen();
+    popupPicImage.src = card.link;
+    popupPicTitle.textContent = card.name;
+  });
 
 });
 
@@ -141,6 +149,9 @@ editButton.addEventListener('click', popupOpen);
 
 // Прикрепляем обработчик к кнопке закрытия
 popupToggle.addEventListener('click', popupClose);
+
+// Прикрепляем обработчик к кнопке закрытия попапа с картинкой
+popupPicToggle.addEventListener('click', popupPicClose);
 
 // Прикрепляем обработчик к кнопке сохранения
 formElement.addEventListener('submit', formSubmitHandler);

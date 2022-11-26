@@ -1,0 +1,25 @@
+.popup-pic__toggle {
+  position: relative;
+  cursor: pointer;
+  max-width: 32px;
+  max-height: 32px;
+  background-color: transparent;
+  border: 0;
+  transition: opacity .3s;
+  right: -220px;
+  bottom: 10px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 568px) {
+  .popup-pic__toggle {
+    position: static;
+    align-self: flex-end;
+    margin-bottom: 16px;
+  }
+}
+
+.popup-pic__toggle:hover {
+  opacity: .6;
+}
