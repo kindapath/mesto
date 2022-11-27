@@ -26,6 +26,9 @@ const popupPic = page.querySelector('.popup-pic');
 // Находим попап формы добавления
 const popupAdd = page.querySelector('.popup-add');
 
+const popupAddButton = popupAdd.querySelector('.popup-add__submit');
+const popupAddElement = popupAdd.querySelector('.popup-add__container')
+
 // Находим изображение в блоке попапа с картинкой
 const popupPicImage = popupPic.querySelector('.popup-pic__image');
 
@@ -124,7 +127,12 @@ function formSubmitHandler(evt) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  popupClose()
+  popupClose();
+}
+
+function popupAddSubmitHandler(evt) {
+  evt.preventDefault();
+  popupAddClose();
 }
 
 // Операции с карточкой
@@ -143,15 +151,13 @@ initialCards.forEach(function (card) {
   cardElement.querySelector('.element__image').alt = card.name;
   cardElement.querySelector('.element__image').src = card.link;
 
-  elementsBlock.append(cardElement);
-
   // Лайкаем карточку
-  cardLikeButton.addEventListener('click', function(event){
+  cardLikeButton.addEventListener('click', function (event) {
     event.target.classList.toggle('element__like_active')
   });
 
   // Удаляем карточку
-  cardRemoveButton.addEventListener('click', function(){
+  cardRemoveButton.addEventListener('click', function () {
     cardElement.remove()
   });
 
@@ -162,8 +168,28 @@ initialCards.forEach(function (card) {
     popupPicTitle.textContent = card.name;
   });
 
+  elementsBlock.append(cardElement);
 });
 
+
+function addCard (name,link) {
+
+  const cardAddElement = cardTemplate.querySelector('.element').cloneNode(true);
+
+  cardAddElement.querySelector('.element__title').textContent = name;
+  cardAddElement.querySelector('.element__image').alt = name;
+  cardAddElement.querySelector('.element__image').src = link;
+
+  elementsBlock.prepend(cardAddElement);
+}
+
+
+popupAddButton.addEventListener('click', function () {
+  popupaddNameInp = popupAdd.querySelector('.popup-add__input_field_name');
+  popupaddLinkInp = popupAdd.querySelector('.popup-add__input_field_link');
+
+  addCard(popupaddNameInp.value, popupaddLinkInp.value);
+});
 
 // Прикрепляем обработчик к кнопке редактирования
 editButton.addEventListener('click', popupOpen);
@@ -180,10 +206,11 @@ popupPicToggle.addEventListener('click', popupPicClose);
 // Прикрепляем обработчик к кнопке закрытия попапа добавления карточки
 popupAddToggle.addEventListener('click', popupAddClose);
 
-// Прикрепляем обработчик к кнопке сохранения
+// Прикрепляем обработчик к кнопке форме редактирования
 formElement.addEventListener('submit', formSubmitHandler);
 
-
+// Прикрепляем обработчик к форме добавления
+popupAddElement.addEventListener('submit', popupAddSubmitHandler);
 
 
 
