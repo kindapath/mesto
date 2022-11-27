@@ -135,6 +135,10 @@ function popupAddSubmitHandler(evt) {
   popupAddClose();
 }
 
+function addLike(event) {
+  event.target.classList.toggle('element__like_active')
+}
+
 // Операции с карточкой
 initialCards.forEach(function (card) {
 
@@ -152,9 +156,7 @@ initialCards.forEach(function (card) {
   cardElement.querySelector('.element__image').src = card.link;
 
   // Лайкаем карточку
-  cardLikeButton.addEventListener('click', function (event) {
-    event.target.classList.toggle('element__like_active')
-  });
+  cardLikeButton.addEventListener('click', addLike);
 
   // Удаляем карточку
   cardRemoveButton.addEventListener('click', function () {
@@ -172,13 +174,30 @@ initialCards.forEach(function (card) {
 });
 
 
-function addCard (name,link) {
+function addCard(name, link) {
 
   const cardAddElement = cardTemplate.querySelector('.element').cloneNode(true);
+  const cardAddLike = cardAddElement.querySelector('.element__like');
+  const cardAddRemove = cardAddElement.querySelector('.element__remove');
+  const cardAddImage = cardAddElement.querySelector('.element__image');
 
   cardAddElement.querySelector('.element__title').textContent = name;
   cardAddElement.querySelector('.element__image').alt = name;
   cardAddElement.querySelector('.element__image').src = link;
+
+  // Лайкаем карточку
+  cardAddLike.addEventListener('click', addLike);
+
+  // Удаляем карточку
+  cardAddRemove.addEventListener('click', function () {
+    cardAddElement.remove()
+  });
+
+  cardAddImage.addEventListener('click', function () {
+    popupPicOpen();
+    popupPicImage.src = link;
+    popupPicTitle.textContent = name;
+  });
 
   elementsBlock.prepend(cardAddElement);
 }
@@ -189,6 +208,10 @@ popupAddButton.addEventListener('click', function () {
   popupaddLinkInp = popupAdd.querySelector('.popup-add__input_field_link');
 
   addCard(popupaddNameInp.value, popupaddLinkInp.value);
+
+  popupaddNameInp.value = ''
+  popupaddLinkInp.value = ''
+
 });
 
 // Прикрепляем обработчик к кнопке редактирования
