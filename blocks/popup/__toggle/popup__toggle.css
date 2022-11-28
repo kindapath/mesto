@@ -1,22 +1,24 @@
 .popup__toggle {
-  position: relative;
+  position: absolute;
+  right: -40px;
+  top: -40px;
   cursor: pointer;
   max-width: 32px;
   max-height: 32px;
   background-color: transparent;
   border: 0;
   transition: opacity .3s;
-  right: -240px;
-  bottom: 10px;
   padding: 0;
   box-sizing: border-box;
 }
 
 @media screen and (max-width: 568px) {
   .popup__toggle {
-    position: static;
+    top: -40px;
+    right: 0;
     align-self: flex-end;
-    margin-bottom: 16px;
+    width: 20px;
+    height: 20px;
   }
 }
 
