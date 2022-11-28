@@ -168,6 +168,7 @@ initialCards.forEach(function (card) {
     popupPicOpen();
     popupPicImage.src = card.link;
     popupPicTitle.textContent = card.name;
+    popupPicImage.alt = card.name;
   });
 
   elementsBlock.append(cardElement);
@@ -197,6 +198,7 @@ function addCard(name, link) {
     popupPicOpen();
     popupPicImage.src = link;
     popupPicTitle.textContent = name;
+    popupPicImage.alt = name;
   });
 
   elementsBlock.prepend(cardAddElement);
