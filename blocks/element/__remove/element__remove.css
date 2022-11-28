@@ -2,13 +2,13 @@
   background-color: transparent;
   border: 0;
   position: absolute;
-  align-self: flex-end;
-  margin-top: 20px;
-  margin-right: 20px;
+  right: 20px;
+  top: 20px;
   padding: 0;
   width: 18px;
   height: 19px;
   transition: opacity .3s;
+  cursor: pointer;
 }
 
 .element__remove:hover {
