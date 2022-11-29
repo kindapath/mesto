@@ -1,6 +1,6 @@
-.popup__title {
+.popup__text_type_pic {
+  color: #fff;
   margin: 0;
-  justify-self: flex-end;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
