@@ -14,7 +14,7 @@ const popupAdd = page.querySelector('.popup_type_add');
 const popupPic = page.querySelector('.popup_type_pic');
 
 const popupImage = page.querySelector('.popup__image');
-const popupTitle = page.querySelector('.popup__title');
+const popupImageText = page.querySelector('.popup__text_type_pic');
 
 // Находим формы
 const popupForm = page.querySelector('.popup__form');
@@ -101,7 +101,7 @@ function createCard(title, link) {
     openPopup(popupPic);
     popupImage.src = link;
     popupImage.alt = title;
-    popupTitle.textContent = title;
+    popupImageText.textContent = title;
 
   });
 
