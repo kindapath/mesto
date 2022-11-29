@@ -22,14 +22,15 @@ const popupEditForm = page.querySelector('.popup__form_type_edit');
 const popupAddForm = page.querySelector('.popup__form_type_add');
 
 // Находим инпуты
-const nameInput = popupForm.querySelector('.popup__input_field_name');
-const jobInput = popupForm.querySelector('.popup__input_field_job');
-const titleInput = popupForm.querySelector('.popup__input_field_title');
-const linkInput = popupForm.querySelector('.popup__input_field_link');
+const nameInput = popupEditForm.querySelector('.popup__input_field_name');
+const jobInput = popupEditForm.querySelector('.popup__input_field_job');
+const titleInput = popupAddForm.querySelector('.popup__input_field_title');
+const linkInput = popupAddForm.querySelector('.popup__input_field_link');
 
 // Находим кнопки закрытия
 const popupCloseButtonsArr = page.querySelectorAll('.popup__close');
-const popupEditCloseButton = page.querySelector('.popup__close_type_edit');
+const popupEditCloseBtn = page.querySelector('.popup__close_type_edit');
+const popupAddCloseBtn = page.querySelector('.popup__close_type_add');
 
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
@@ -55,14 +56,23 @@ function closePopup(btn) {
   closestPopup.classList.remove('popup_opened');
 }
 
-// Обработчик «отправки» формы
+// Обработчик «отправки» формы редактирования
 function submitEditForm(evt) {
   evt.preventDefault();
 
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  closePopup(popupEditCloseButton);
+  closePopup(popupEditCloseBtn);
+}
+
+// Обработчик «отправки» формы
+function submitAddForm(evt) {
+  evt.preventDefault();
+  console.log('create great stuff')
+  renderCard(titleInput.value, linkInput.value);
+  closePopup(popupAddCloseBtn);
+  popupAddForm.reset();
 }
 
 // Создаем карточку
@@ -135,6 +145,8 @@ popupCloseButtonsArr.forEach((button) => {
 // Прикрепляем обработчик к кнопке "Сохранить"
 popupEditForm.addEventListener('submit', submitEditForm);
 
+//
+popupAddForm.addEventListener('submit', submitAddForm);
 
 
 
