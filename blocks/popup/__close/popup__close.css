@@ -1,4 +1,4 @@
-.popup__toggle {
+.popup__close {
   position: absolute;
   right: -40px;
   top: -40px;
@@ -13,7 +13,7 @@
 }
 
 @media screen and (max-width: 568px) {
-  .popup__toggle {
+  .popup__close {
     top: -40px;
     right: 0;
     align-self: flex-end;
@@ -22,6 +22,6 @@
   }
 }
 
-.popup__toggle:hover {
+.popup__close:hover {
   opacity: .6;
 }

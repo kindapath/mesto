@@ -6,6 +6,8 @@
   background-position: center;
   transition: opacity .3s;
   cursor: pointer;
+  background-color: transparent;
+  border: 0;
 }
 
 .element__like:hover {
