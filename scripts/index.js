@@ -8,7 +8,6 @@ const profileAddButton = profile.querySelector('.profile__add-btn');
 const profileEditButton = profile.querySelector('.profile__edit-btn');
 
 // Находим попапы в DOM
-const popup = page.querySelector('.popup');
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
 const popupPic = page.querySelector('.popup_type_pic');
@@ -17,7 +16,6 @@ const popupImage = page.querySelector('.popup__image');
 const popupImageText = page.querySelector('.popup__text_type_pic');
 
 // Находим формы
-const popupForm = page.querySelector('.popup__form');
 const popupEditForm = page.querySelector('.popup__form_type_edit');
 const popupAddForm = page.querySelector('.popup__form_type_add');
 
