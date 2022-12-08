@@ -8,6 +8,9 @@ const profileAddButton = profile.querySelector('.profile__add-btn');
 const profileEditButton = profile.querySelector('.profile__edit-btn');
 
 // Находим попапы в DOM
+const popups = page.querySelectorAll('.popup');
+const popup = page.querySelector('.popup');
+
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
 const popupPic = page.querySelector('.popup_type_pic');
@@ -49,10 +52,24 @@ function openPopup(el) {
 }
 
 // Закрываем форму
-function closePopup(btn) {
-  const closestPopup = btn.closest('.popup');
+function closePopup(el) {
+
+  if (el.classList.contains(popup)) {
+    el.classList.remove('popup_opened');
+  }
+
+  const closestPopup = el.closest('.popup');
   closestPopup.classList.remove('popup_opened');
 }
+
+function handleKey(evt) {
+  if (evt.key === 'Escape') {
+
+    popup.classList.remove('popup_opened');
+  };
+};
+
+page.addEventListener('keydown', handleKey);
 
 // Обработчик «отправки» формы редактирования
 function submitEditForm(evt) {
@@ -143,9 +160,18 @@ popupCloseButtonsArr.forEach((button) => {
 // Прикрепляем обработчик к кнопке "Сохранить"
 popupEditForm.addEventListener('submit', submitEditForm);
 
-//
+// Прикрепляем обработчик к кнопке "Создать"
 popupAddForm.addEventListener('submit', submitAddForm);
 
+
+popups.forEach((popup) => {
+
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.closest('.popup__container')) return
+    closePopup(popup);
+  });
+
+});
 
 
 
