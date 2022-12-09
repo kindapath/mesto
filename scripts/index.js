@@ -19,10 +19,12 @@ const popupImage = page.querySelector('.popup__image');
 const popupImageText = page.querySelector('.popup__text_type_pic');
 
 // Находим формы
+const popupForm = page.querySelector('.popup__form');
 const popupEditForm = page.querySelector('.popup__form_type_edit');
 const popupAddForm = page.querySelector('.popup__form_type_add');
 
 // Находим инпуты
+const popupInput = popup.querySelector('.popup__input');
 const nameInput = popupEditForm.querySelector('.popup__input_field_name');
 const jobInput = popupEditForm.querySelector('.popup__input_field_job');
 const titleInput = popupAddForm.querySelector('.popup__input_field_title');
@@ -72,11 +74,10 @@ function handleEscKey(evt) {
     // Получаем елемент с открытым попапом
     const openedPopup = page.getElementsByClassName('popup_opened');
 
-    // Если открытый попап существует, закрываем его
+    // Если открытый попап существует, закрываем егоы
     if (openedPopup.length > 0) {
       closePopup(openedPopup[0]);
-    }
-
+    };
   };
 };
 
@@ -95,7 +96,6 @@ function submitEditForm(evt) {
 // Обработчик «отправки» формы
 function submitAddForm(evt) {
   evt.preventDefault();
-  console.log('create great stuff')
   renderCard(titleInput.value, linkInput.value);
   closePopup(popupAddCloseBtn);
   popupAddForm.reset();
@@ -178,7 +178,9 @@ page.addEventListener('keydown', handleEscKey);
 // Прикрепляем обработчик для закрытия попапа на оверлэй
 popups.forEach((popup) => {
 
-  popup.addEventListener('click', (evt) => {
+  popup.addEventListener('mousedown', (evt) => {
+
+    // Если кликаем на контейнер, то ничего, иначе закрываем попап
     if (evt.target.closest('.popup__container')) return
     closePopup(popup);
   });
