@@ -54,22 +54,33 @@ function openPopup(el) {
 // Закрываем форму
 function closePopup(el) {
 
+  // Если в классе есть popup, то удаляем модификатор
   if (el.classList.contains(popup)) {
     el.classList.remove('popup_opened');
   }
 
+  // Удаляем модификатор у близжайшего родительского попапа
   const closestPopup = el.closest('.popup');
   closestPopup.classList.remove('popup_opened');
 }
 
-function handleKey(evt) {
+
+// Закрываем попап на кнопку Esc
+function handleEscKey(evt) {
   if (evt.key === 'Escape') {
 
-    popup.classList.remove('popup_opened');
+    // Получаем елемент с открытым попапом
+    const openedPopup = page.getElementsByClassName('popup_opened');
+
+    // Если открытый попап существует, закрываем его
+    if (openedPopup.length > 0) {
+      closePopup(openedPopup[0]);
+    }
+
   };
 };
 
-page.addEventListener('keydown', handleKey);
+
 
 // Обработчик «отправки» формы редактирования
 function submitEditForm(evt) {
@@ -134,8 +145,6 @@ initialCards.forEach((item) => {
   renderCard(item.name, item.link);
 });
 
-
-
 // Прикрепляем обработчик к кнопке редактирования
 profileEditButton.addEventListener('click', () => {
   openPopup(popupEdit);
@@ -163,7 +172,10 @@ popupEditForm.addEventListener('submit', submitEditForm);
 // Прикрепляем обработчик к кнопке "Создать"
 popupAddForm.addEventListener('submit', submitAddForm);
 
+// Прикрепляем обработчик для закрытия попапа на кнопку Esc
+page.addEventListener('keydown', handleEscKey);
 
+// Прикрепляем обработчик для закрытия попапа на оверлэй
 popups.forEach((popup) => {
 
   popup.addEventListener('click', (evt) => {
