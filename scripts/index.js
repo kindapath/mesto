@@ -9,7 +9,7 @@ const profileEditButton = profile.querySelector('.profile__edit-btn');
 
 // Находим попапы в DOM
 const popups = page.querySelectorAll('.popup');
-const popup = page.querySelector('.popup');
+
 
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
@@ -24,7 +24,7 @@ const popupEditForm = page.querySelector('.popup__form_type_edit');
 const popupAddForm = page.querySelector('.popup__form_type_add');
 
 // Находим инпуты
-const popupInput = popup.querySelector('.popup__input');
+
 const nameInput = popupEditForm.querySelector('.popup__input_field_name');
 const jobInput = popupEditForm.querySelector('.popup__input_field_job');
 const titleInput = popupAddForm.querySelector('.popup__input_field_title');
@@ -51,19 +51,24 @@ function insertText() {
 // Открываем форму
 function openPopup(el) {
   el.classList.add('popup_opened');
+  // Прикрепляем обработчик для закрытия попапа на кнопку Esc
+  page.addEventListener('keydown', handleEscKey);
+
 }
 
 // Закрываем форму
 function closePopup(el) {
 
   // Если в классе есть popup, то удаляем модификатор
-  if (el.classList.contains(popup)) {
+  if (el.classList.contains('popup')) {
     el.classList.remove('popup_opened');
   }
 
   // Удаляем модификатор у близжайшего родительского попапа
   const closestPopup = el.closest('.popup');
   closestPopup.classList.remove('popup_opened');
+
+  page.removeEventListener('keydown', handleEscKey);
 }
 
 
@@ -72,12 +77,10 @@ function handleEscKey(evt) {
   if (evt.key === 'Escape') {
 
     // Получаем елемент с открытым попапом
-    const openedPopup = page.getElementsByClassName('popup_opened');
+    const openedPopup = page.querySelector('.popup_opened');
 
-    // Если открытый попап существует, закрываем егоы
-    if (openedPopup.length > 0) {
-      closePopup(openedPopup[0]);
-    };
+    closePopup(openedPopup);
+
   };
 };
 
@@ -172,8 +175,7 @@ popupEditForm.addEventListener('submit', submitEditForm);
 // Прикрепляем обработчик к кнопке "Создать"
 popupAddForm.addEventListener('submit', submitAddForm);
 
-// Прикрепляем обработчик для закрытия попапа на кнопку Esc
-page.addEventListener('keydown', handleEscKey);
+
 
 // Прикрепляем обработчик для закрытия попапа на оверлэй
 popups.forEach((popup) => {
