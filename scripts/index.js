@@ -35,6 +35,7 @@ const popupCloseButtonsArr = page.querySelectorAll('.popup__close');
 const popupEditCloseBtn = page.querySelector('.popup__close_type_edit');
 const popupAddCloseBtn = page.querySelector('.popup__close_type_add');
 
+
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
 
@@ -64,13 +65,16 @@ function closePopup(el) {
     el.classList.remove('popup_opened');
   }
 
-  // Удаляем модификатор у близжайшего родительского попапа
-  const closestPopup = el.closest('.popup');
-  closestPopup.classList.remove('popup_opened');
-
   page.removeEventListener('keydown', handleEscKey);
 }
 
+// Функция проверки инпутов
+function checkInputs(config) {
+  const form = document.querySelector(config.formSelector);
+  const inputs = Array.from(form.querySelectorAll(config.inputSelector));
+  const button = form.querySelector(config.submitButtonSelector);
+  toggleButtonState(inputs, button, config);
+}
 
 // Закрываем попап на кнопку Esc
 function handleEscKey(evt) {
@@ -93,15 +97,16 @@ function submitEditForm(evt) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  closePopup(popupEditCloseBtn);
+  closePopup(popupEdit);
 }
 
 // Обработчик «отправки» формы
 function submitAddForm(evt) {
   evt.preventDefault();
   renderCard(titleInput.value, linkInput.value);
-  closePopup(popupAddCloseBtn);
+  closePopup(popupAdd);
   popupAddForm.reset();
+
 }
 
 // Создаем карточку
@@ -134,12 +139,12 @@ function createCard(title, link) {
 
   });
 
-  return readyCard = card;
+  return card;
 }
 
 // Вставляем карточку в ДОМ
 function renderCard(title, link) {
-  createCard(title, link);
+  const readyCard = createCard(title, link);
   elementsBlock.prepend(readyCard);
 }
 
@@ -152,12 +157,26 @@ initialCards.forEach((item) => {
 profileEditButton.addEventListener('click', () => {
   openPopup(popupEdit);
   insertText();
+  checkInputs({
+    formSelector: '.popup__form_type_edit',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled'
+  });
 });
 
 // Прикрепляем обработчик к кнопке добавления
 profileAddButton.addEventListener('click', () => {
   openPopup(popupAdd);
+  checkInputs({
+    formSelector: '.popup__form_type_add',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__submit',
+    inactiveButtonClass: 'popup__submit_disabled'
+  });
 });
+
+
 
 // Прикрепляем обработчик ко всем кнопкам закрытия
 
