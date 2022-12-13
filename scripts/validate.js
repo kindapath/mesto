@@ -1,6 +1,4 @@
 
-
-
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(config.inputErrorClass);
@@ -40,7 +38,6 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-
 const setEventListeners = (formElement, config) => {
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
@@ -67,7 +64,6 @@ const enableValidation = (config) => {
   });
 
 };
-
 
 enableValidation({
   formSelector: '.popup__form',

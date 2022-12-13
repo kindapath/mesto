@@ -9,12 +9,11 @@ const profileEditButton = profile.querySelector('.profile__edit-btn');
 
 // Находим попапы в DOM
 const popups = page.querySelectorAll('.popup');
-
-
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
 const popupPic = page.querySelector('.popup_type_pic');
 
+// Находим картинки в DOM
 const popupImage = page.querySelector('.popup__image');
 const popupImageText = page.querySelector('.popup__text_type_pic');
 
@@ -24,17 +23,10 @@ const popupEditForm = page.querySelector('.popup__form_type_edit');
 const popupAddForm = page.querySelector('.popup__form_type_add');
 
 // Находим инпуты
-
 const nameInput = popupEditForm.querySelector('.popup__input_field_name');
 const jobInput = popupEditForm.querySelector('.popup__input_field_job');
 const titleInput = popupAddForm.querySelector('.popup__input_field_title');
 const linkInput = popupAddForm.querySelector('.popup__input_field_link');
-
-// Находим кнопки закрытия
-const popupCloseButtonsArr = page.querySelectorAll('.popup__close');
-const popupEditCloseBtn = page.querySelector('.popup__close_type_edit');
-const popupAddCloseBtn = page.querySelector('.popup__close_type_add');
-
 
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
@@ -59,12 +51,8 @@ function openPopup(el) {
 
 // Закрываем форму
 function closePopup(el) {
-
-  // Если в классе есть popup, то удаляем модификатор
-  if (el.classList.contains('popup')) {
-    el.classList.remove('popup_opened');
-  }
-
+  el.classList.remove('popup_opened');
+// Удаляем обработчик для закрытия попапа на кнопку Esc
   page.removeEventListener('keydown', handleEscKey);
 }
 
@@ -79,12 +67,8 @@ function checkInputs(config) {
 // Закрываем попап на кнопку Esc
 function handleEscKey(evt) {
   if (evt.key === 'Escape') {
-
-    // Получаем елемент с открытым попапом
     const openedPopup = page.querySelector('.popup_opened');
-
     closePopup(openedPopup);
-
   };
 };
 
@@ -106,7 +90,6 @@ function submitAddForm(evt) {
   renderCard(titleInput.value, linkInput.value);
   closePopup(popupAdd);
   popupAddForm.reset();
-
 }
 
 // Создаем карточку
@@ -157,12 +140,6 @@ initialCards.forEach((item) => {
 profileEditButton.addEventListener('click', () => {
   openPopup(popupEdit);
   insertText();
-  checkInputs({
-    formSelector: '.popup__form_type_edit',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit',
-    inactiveButtonClass: 'popup__submit_disabled'
-  });
 });
 
 // Прикрепляем обработчик к кнопке добавления
@@ -176,37 +153,20 @@ profileAddButton.addEventListener('click', () => {
   });
 });
 
-
-
-// Прикрепляем обработчик ко всем кнопкам закрытия
-
-popupCloseButtonsArr.forEach((button) => {
-
-  button.addEventListener('click', () => {
-    closePopup(button);
-  });
-
-})
-
 // Прикрепляем обработчик к кнопке "Сохранить"
 popupEditForm.addEventListener('submit', submitEditForm);
 
 // Прикрепляем обработчик к кнопке "Создать"
 popupAddForm.addEventListener('submit', submitAddForm);
 
-
-
-// Прикрепляем обработчик для закрытия попапа на оверлэй
+//Прикрепляем обработчик для закрытия попапа на оверлэй и крестика
 popups.forEach((popup) => {
-
   popup.addEventListener('mousedown', (evt) => {
-
-    // Если кликаем на контейнер, то ничего, иначе закрываем попап
-    if (evt.target.closest('.popup__container')) return
-    closePopup(popup);
-  });
-
-});
-
-
-
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains('popup__close-image')) {
+      closePopup(popup);
+    }
+  })
+})
