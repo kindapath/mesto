@@ -1,3 +1,4 @@
+const page = document.querySelector('.page');
 
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -73,3 +74,7 @@ enableValidation({
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active'
 });
+
+export class FormValidator {
+
+}

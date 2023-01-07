@@ -1,3 +1,8 @@
+import { Card } from './Card.js'
+import { FormValidator } from './FormValidator.js';
+import { initialCards } from './data.js';
+import { openPopup, closePopup } from './utils.js';
+
 const page = document.querySelector('.page');
 
 // Находим профиль в DOM
@@ -11,11 +16,6 @@ const profileEditButton = profile.querySelector('.profile__edit-btn');
 const popups = page.querySelectorAll('.popup');
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
-const popupPic = page.querySelector('.popup_type_pic');
-
-// Находим картинки в DOM
-const popupImage = page.querySelector('.popup__image');
-const popupImageText = page.querySelector('.popup__text_type_pic');
 
 // Находим формы
 const popupForm = page.querySelector('.popup__form');
@@ -31,29 +31,11 @@ const linkInput = popupAddForm.querySelector('.popup__input_field_link');
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
 
-// Находим темплейт карточки
-const cardTemplate = page.querySelector('#element-template').content;
-
 
 //Вставляем значение из имени и работы в поля формы
 function insertText() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-}
-
-// Открываем форму
-function openPopup(el) {
-  el.classList.add('popup_opened');
-  // Прикрепляем обработчик для закрытия попапа на кнопку Esc
-  page.addEventListener('keydown', handleEscKey);
-
-}
-
-// Закрываем форму
-function closePopup(el) {
-  el.classList.remove('popup_opened');
-// Удаляем обработчик для закрытия попапа на кнопку Esc
-  page.removeEventListener('keydown', handleEscKey);
 }
 
 // Функция проверки инпутов
@@ -63,16 +45,6 @@ function checkInputs(config) {
   const button = form.querySelector(config.submitButtonSelector);
   toggleButtonState(inputs, button, config);
 }
-
-// Закрываем попап на кнопку Esc
-function handleEscKey(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = page.querySelector('.popup_opened');
-    closePopup(openedPopup);
-  };
-};
-
-
 
 // Обработчик «отправки» формы редактирования
 function submitEditForm(evt) {
@@ -92,48 +64,16 @@ function submitAddForm(evt) {
   popupAddForm.reset();
 }
 
-// Создаем карточку
-function createCard(title, link) {
-  const card = cardTemplate.querySelector('.element').cloneNode(true);
-  const cardLikeBtn = card.querySelector('.element__like');
-  const cardRemoveBtn = card.querySelector('.element__remove');
-  const cardImage = card.querySelector('.element__image');
+function renderCard (item) {
+  const card = new Card (item, '#element-template');
+  const cardElement = card.generateCard();
 
-  card.querySelector('.element__title').textContent = title;
-  card.querySelector('.element__image').alt = title;
-  card.querySelector('.element__image').src = link;
-
-  // Лайкаем карточку
-  cardLikeBtn.addEventListener('click', (evt) => {
-    evt.target.classList.toggle('element__like_active');
-  });
-
-  // Удаляем карточку
-  cardRemoveBtn.addEventListener('click', () => {
-    card.remove();
-  });
-
-  // Открываем попап по клику на картинку
-  cardImage.addEventListener('click', () => {
-    openPopup(popupPic);
-    popupImage.src = link;
-    popupImage.alt = title;
-    popupImageText.textContent = title;
-
-  });
-
-  return card;
-}
-
-// Вставляем карточку в ДОМ
-function renderCard(title, link) {
-  const readyCard = createCard(title, link);
-  elementsBlock.prepend(readyCard);
+  elementsBlock.prepend(cardElement);
 }
 
 // Вставляем начальные карточки
-initialCards.forEach((item) => {
-  renderCard(item.name, item.link);
+initialCards.forEach((card) => {
+  renderCard(card);
 });
 
 // Прикрепляем обработчик к кнопке редактирования
@@ -170,3 +110,5 @@ popups.forEach((popup) => {
     }
   })
 })
+
+
