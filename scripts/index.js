@@ -31,6 +31,23 @@ const linkInput = popupAddForm.querySelector('.popup__input_field_link');
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
 
+const validEditForm = new FormValidator({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}, popupEdit);
+
+const validAddForm = new FormValidator({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}, popupAdd);
 
 //Вставляем значение из имени и работы в поля формы
 function insertText() {
@@ -38,13 +55,13 @@ function insertText() {
   jobInput.value = profileJob.textContent;
 }
 
-// Функция проверки инпутов
-function checkInputs(config) {
-  const form = document.querySelector(config.formSelector);
-  const inputs = Array.from(form.querySelectorAll(config.inputSelector));
-  const button = form.querySelector(config.submitButtonSelector);
-  toggleButtonState(inputs, button, config);
-}
+// // Функция проверки инпутов
+// function checkInputs(config) {
+//   const form = document.querySelector(config.formSelector);
+//   const inputs = Array.from(form.querySelectorAll(config.inputSelector));
+//   const button = form.querySelector(config.submitButtonSelector);
+//   FormValidator._toggleButtonState(inputs, button);
+// }
 
 // Обработчик «отправки» формы редактирования
 function submitEditForm(evt) {
@@ -59,13 +76,19 @@ function submitEditForm(evt) {
 // Обработчик «отправки» формы
 function submitAddForm(evt) {
   evt.preventDefault();
-  renderCard(titleInput.value, linkInput.value);
+
+  const inputData = {
+    name: titleInput.value,
+    link: linkInput.value
+  }
+
+  renderCard(inputData);
   closePopup(popupAdd);
   popupAddForm.reset();
 }
 
-function renderCard (item) {
-  const card = new Card (item, '#element-template');
+function renderCard (data) {
+  const card = new Card (data, '#element-template');
   const cardElement = card.generateCard();
 
   elementsBlock.prepend(cardElement);
@@ -85,13 +108,18 @@ profileEditButton.addEventListener('click', () => {
 // Прикрепляем обработчик к кнопке добавления
 profileAddButton.addEventListener('click', () => {
   openPopup(popupAdd);
-  checkInputs({
-    formSelector: '.popup__form_type_add',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit',
-    inactiveButtonClass: 'popup__submit_disabled'
-  });
+  // checkInputs({
+  //   formSelector: '.popup__form_type_add',
+  //   inputSelector: '.popup__input',
+  //   submitButtonSelector: '.popup__submit',
+  //   inactiveButtonClass: 'popup__submit_disabled'
+  // });
 });
+
+// Включаем валидацию у форм
+validEditForm.enableValidation();
+
+validAddForm.enableValidation();
 
 // Прикрепляем обработчик к кнопке "Сохранить"
 popupEditForm.addEventListener('submit', submitEditForm);
