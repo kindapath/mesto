@@ -1,4 +1,4 @@
-import { Card } from './Card.js'
+import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { initialCards } from './data.js';
 import { openPopup, closePopup } from './utils.js';
@@ -6,7 +6,7 @@ import { openPopup, closePopup } from './utils.js';
 const page = document.querySelector('.page');
 
 // Находим профиль в DOM
-const profile = page.querySelector('.profile')
+const profile = page.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
 const profileJob = profile.querySelector('.profile__job');
 const profileAddButton = profile.querySelector('.profile__add-btn');
@@ -18,7 +18,6 @@ const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
 
 // Находим формы
-const popupForm = page.querySelector('.popup__form');
 const popupEditForm = page.querySelector('.popup__form_type_edit');
 const popupAddForm = page.querySelector('.popup__form_type_add');
 
@@ -31,8 +30,9 @@ const linkInput = popupAddForm.querySelector('.popup__input_field_link');
 // Находим блок elements
 const elementsBlock = page.querySelector('.elements');
 
-const validEditForm = new FormValidator({
-  formSelector: '.popup__form',
+// Валидатор формы редактирования профиля
+const validatorEditForm = new FormValidator({
+  formSelector: '.popup__form_type_edit',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit',
   inactiveButtonClass: 'popup__submit_disabled',
@@ -40,8 +40,9 @@ const validEditForm = new FormValidator({
   errorClass: 'popup__input-error_active'
 }, popupEdit);
 
-const validAddForm = new FormValidator({
-  formSelector: '.popup__form',
+// Валидатор формы добавления карточки
+const validatorAddForm = new FormValidator({
+  formSelector: '.popup__form_type_add',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit',
   inactiveButtonClass: 'popup__submit_disabled',
@@ -49,19 +50,11 @@ const validAddForm = new FormValidator({
   errorClass: 'popup__input-error_active'
 }, popupAdd);
 
-//Вставляем значение из имени и работы в поля формы
+// Вставляем значение из имени и работы в поля формы
 function insertText() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 }
-
-// // Функция проверки инпутов
-// function checkInputs(config) {
-//   const form = document.querySelector(config.formSelector);
-//   const inputs = Array.from(form.querySelectorAll(config.inputSelector));
-//   const button = form.querySelector(config.submitButtonSelector);
-//   FormValidator._toggleButtonState(inputs, button);
-// }
 
 // Обработчик «отправки» формы редактирования
 function submitEditForm(evt) {
@@ -77,16 +70,19 @@ function submitEditForm(evt) {
 function submitAddForm(evt) {
   evt.preventDefault();
 
+  // Записываем данные инпутов в объект
   const inputData = {
     name: titleInput.value,
     link: linkInput.value
   }
 
+  // Создаем карточку и закрываем попап
   renderCard(inputData);
   closePopup(popupAdd);
   popupAddForm.reset();
 }
 
+// Создаем новую карточку и вставляем её в ДОМ
 function renderCard (data) {
   const card = new Card (data, '#element-template');
   const cardElement = card.generateCard();
@@ -100,26 +96,18 @@ initialCards.forEach((card) => {
 });
 
 // Прикрепляем обработчик к кнопке редактирования
+// Форма открывается -> включается валидация
 profileEditButton.addEventListener('click', () => {
   openPopup(popupEdit);
   insertText();
+  validatorEditForm.enableValidation();
 });
 
 // Прикрепляем обработчик к кнопке добавления
 profileAddButton.addEventListener('click', () => {
   openPopup(popupAdd);
-  // checkInputs({
-  //   formSelector: '.popup__form_type_add',
-  //   inputSelector: '.popup__input',
-  //   submitButtonSelector: '.popup__submit',
-  //   inactiveButtonClass: 'popup__submit_disabled'
-  // });
+  validatorAddForm.enableValidation();
 });
-
-// Включаем валидацию у форм
-validEditForm.enableValidation();
-
-validAddForm.enableValidation();
 
 // Прикрепляем обработчик к кнопке "Сохранить"
 popupEditForm.addEventListener('submit', submitEditForm);
