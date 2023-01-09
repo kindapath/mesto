@@ -1,5 +1,7 @@
 import { openPopup } from "./utils.js";
 
+// Класс Card
+
 export class Card {
   constructor(data, templateSelector) {
     this._templateSelector = templateSelector;
@@ -8,6 +10,7 @@ export class Card {
     this._link = data.link;
   }
 
+  // Получаем шаблон
   _getTemplate() {
     const cardElement = document
       .querySelector(this._templateSelector)
@@ -18,6 +21,7 @@ export class Card {
     return cardElement;
   }
 
+  // Устанавливаем слушатели
   _setEventListeners() {
 
     const cardLikeBtn = this._element.querySelector('.element__like');
@@ -38,14 +42,17 @@ export class Card {
 
   }
 
+  // Переключаем лайк на карточке
   _toggleLike() {
     this._element.querySelector('.element__like').classList.toggle('element__like_active');
   }
 
+  // Удаляем карточку
   _removeCard() {
     this._element.remove();
   }
 
+  // Открываем попап
   _openPopup() {
 
     const popupPic = document.querySelector('.popup_type_pic');
@@ -59,6 +66,7 @@ export class Card {
     popupImageText.textContent = this._name;
   }
 
+  // Генерируем готовую карточку
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
