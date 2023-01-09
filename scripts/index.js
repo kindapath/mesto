@@ -31,24 +31,20 @@ const linkInput = popupAddForm.querySelector('.popup__input_field_link');
 const elementsBlock = page.querySelector('.elements');
 
 // Валидатор формы редактирования профиля
-const validatorEditForm = new FormValidator({
-  formSelector: '.popup__form_type_edit',
+
+const config = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit',
   inactiveButtonClass: 'popup__submit_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active'
-}, popupEdit);
+}
+
+// Валидатор формы редактирования профиля
+const validatorEditForm = new FormValidator(config, popupEdit);
 
 // Валидатор формы добавления карточки
-const validatorAddForm = new FormValidator({
-  formSelector: '.popup__form_type_add',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-}, popupAdd);
+const validatorAddForm = new FormValidator(config, popupAdd);
 
 // Вставляем значение из имени и работы в поля формы
 function insertText() {
@@ -96,18 +92,22 @@ initialCards.forEach((card) => {
 });
 
 // Прикрепляем обработчик к кнопке редактирования
-// Форма открывается -> включается валидация
 profileEditButton.addEventListener('click', () => {
   openPopup(popupEdit);
   insertText();
-  validatorEditForm.enableValidation();
+  validatorEditForm.toggleButtonState();
 });
 
 // Прикрепляем обработчик к кнопке добавления
 profileAddButton.addEventListener('click', () => {
   openPopup(popupAdd);
-  validatorAddForm.enableValidation();
+  validatorAddForm.toggleButtonState();
 });
+
+// Активируем валидацию для форм
+// редактирования профиля и добавления карточки
+validatorEditForm.enableValidation();
+validatorAddForm.enableValidation();
 
 // Прикрепляем обработчик к кнопке "Сохранить"
 popupEditForm.addEventListener('submit', submitEditForm);

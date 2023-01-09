@@ -1,4 +1,5 @@
 import { openPopup } from "./utils.js";
+import { popupPic, popupImage, popupImageText } from "./utils.js";
 
 // Класс Card
 
@@ -34,6 +35,7 @@ export class Card {
 
     cardRemoveBtn.addEventListener('click', () => {
       this._removeCard();
+      this._element = null;
     });
 
     cardImage.addEventListener('click', () => {
@@ -55,10 +57,6 @@ export class Card {
   // Открываем попап
   _openPopup() {
 
-    const popupPic = document.querySelector('.popup_type_pic');
-    const popupImage = document.querySelector('.popup__image');
-    const popupImageText = document.querySelector('.popup__text_type_pic');
-
     openPopup(popupPic);
 
     popupImage.src = this._link;
@@ -72,6 +70,7 @@ export class Card {
     this._setEventListeners();
 
     this._element.querySelector('.element__image').src = this._link;
+    this._element.querySelector('.element__image').alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
 
     return this._element

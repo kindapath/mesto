@@ -1,3 +1,9 @@
+const popupPic = document.querySelector('.popup_type_pic');
+const popupImage = document.querySelector('.popup__image');
+const popupImageText = document.querySelector('.popup__text_type_pic');
+
+export { popupPic, popupImage, popupImageText }
+
 // Открываем попап
 export function openPopup(el) {
   el.classList.add('popup_opened');
