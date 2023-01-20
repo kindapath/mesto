@@ -4,9 +4,8 @@ import Popup from './Popup.js';
 import PopupWithForm from './PopupWithForm.js';
 import PopupWithImage from './PopupWithImage.js';
 
-
 import { initialCards } from './data.js';
-// import { openPopup, closePopup } from './utils.js';
+import { nameInput, jobInput } from './utils.js';
 import Section from './Section.js';
 import UserInfo from './UserInfo.js';
 
@@ -14,8 +13,6 @@ const page = document.querySelector('.page');
 
 // Находим профиль в DOM
 const profile = page.querySelector('.profile');
-const profileName = profile.querySelector('.profile__name');
-const profileJob = profile.querySelector('.profile__job');
 const profileAddButton = profile.querySelector('.profile__add-btn');
 const profileEditButton = profile.querySelector('.profile__edit-btn');
 
@@ -23,16 +20,6 @@ const profileEditButton = profile.querySelector('.profile__edit-btn');
 const popupWithImage = new PopupWithImage('.popup_type_pic')
 const popupEditSelector = document.querySelector('.popup_type_edit');
 const popupAddSelector = document.querySelector('.popup_type_add');
-
-// Находим формы
-const popupEditForm = page.querySelector('.popup__form_type_edit');
-const popupAddForm = page.querySelector('.popup__form_type_add');
-
-// Находим инпуты
-const nameInput = popupEditForm.querySelector('.popup__input_field_name');
-const jobInput = popupEditForm.querySelector('.popup__input_field_job');
-const titleInput = popupAddForm.querySelector('.popup__input_field_title');
-const linkInput = popupAddForm.querySelector('.popup__input_field_link');
 
 // Настройки валидации
 const config = {
@@ -49,23 +36,13 @@ const validatorEditForm = new FormValidator(config, popupEditSelector);
 // Валидатор формы добавления карточки
 const validatorAddForm = new FormValidator(config, popupAddSelector);
 
+const userInfo = new UserInfo({
+  name: '.profile__name',
+  job: '.profile__job'
+})
 
-// // Вставляем значение из имени и работы в поля формы
-// function insertText() {
-//   nameInput.value = profileName.textContent;
-//   jobInput.value = profileJob.textContent;
-// }
-
-// // Обработчик «отправки» формы редактирования
-// function submitEditForm(evt) {
-//   evt.preventDefault();
-
-//   profileName.textContent = nameInput.value;
-//   profileJob.textContent = jobInput.value;
-
-//   closePopup(popupEdit);
-// }
-
+const userDataName = userInfo.getUserInfo().name;
+const userDataJob = userInfo.getUserInfo().job;
 
 const cardSection = new Section({
   items: initialCards,
@@ -108,21 +85,20 @@ const popupAdd = new PopupWithForm({
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: () => {
-
+    userInfo.setUserInfo()
   }
 })
-
-const userInfo = new UserInfo({
-  name: '.profile__name',
-  job: '.profile__job'
-})
-userInfo.getUserInfo()
 
 cardSection.renderItems()
 
 // Прикрепляем обработчик к кнопке редактирования
 profileEditButton.addEventListener('click', () => {
   popupEdit.open();
+
+  // Вставляем значение из имени и работы в поля формы
+  nameInput.value = userDataName;
+  jobInput.value = userDataJob;
+
   validatorEditForm.toggleButtonState();
 });
 

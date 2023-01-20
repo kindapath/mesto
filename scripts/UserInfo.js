@@ -1,3 +1,5 @@
+import { nameInput , jobInput } from './utils.js';
+
 export default class UserInfo {
   constructor({ name, job }) {
     this._name = document.querySelector(name);
@@ -9,7 +11,6 @@ export default class UserInfo {
       name: this._name.textContent,
       job: this._job.textContent
     }
-    console.log(userData)
     return userData
   }
 

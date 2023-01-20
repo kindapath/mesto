@@ -1,6 +1,8 @@
 const popupPic = document.querySelector('.popup_type_pic');
 const popupImage = document.querySelector('.popup__image');
 const popupImageText = document.querySelector('.popup__text_type_pic');
+export const nameInput = document.querySelector('.popup__input_field_name');
+export const jobInput = document.querySelector('.popup__input_field_job');
 
 export { popupPic, popupImage, popupImageText }
 
