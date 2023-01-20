@@ -28,11 +28,11 @@
 
       <form class="popup__form popup__form_type_edit" novalidate>
 
-        <input class="popup__input popup__input_field_name" type="text" id="name-input" placeholder="Имя" required
+        <input class="popup__input popup__input_field_name" name="name" type="text" id="name-input" placeholder="Имя" required
           minlength="2" maxlength="40" autofocus>
         <span class="popup__input-error name-input-error"></span>
 
-        <input class="popup__input popup__input_field_job" type="text" id="job-input" placeholder="Описание" required
+        <input class="popup__input popup__input_field_job" name="job" type="text" id="job-input" placeholder="Описание" required
           minlength="2" maxlength="200">
         <span class="popup__input-error job-input-error"></span>
 
@@ -55,11 +55,11 @@
 
       <form class="popup__form popup__form_type_add">
 
-        <input class="popup__input popup__input_field_title" type="text" id="title-input" placeholder="Название"
+        <input class="popup__input popup__input_field_title" name="name" type="text" id="title-input" placeholder="Название"
           minlength="1" maxlength="30" required>
         <span class="popup__input-error title-input-error"></span>
 
-        <input class="popup__input popup__input_field_link" type="url" id="link-input" placeholder="Ссылка на картинку"
+        <input class="popup__input popup__input_field_link" name="link" type="url" id="link-input" placeholder="Ссылка на картинку"
           required>
         <span class="popup__input-error link-input-error"></span>
 

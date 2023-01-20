@@ -1,6 +1,6 @@
 // Класс FormValidator
 
-export class FormValidator {
+export default class FormValidator {
   // Настройки и селекторы
   constructor(config, formElement) {
     this._inputSelector = config.inputSelector;

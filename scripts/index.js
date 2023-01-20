@@ -1,7 +1,14 @@
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+import Popup from './Popup.js';
+import PopupWithForm from './PopupWithForm.js';
+import PopupWithImage from './PopupWithImage.js';
+
+
 import { initialCards } from './data.js';
-import { openPopup, closePopup } from './utils.js';
+// import { openPopup, closePopup } from './utils.js';
+import Section from './Section.js';
+import UserInfo from './UserInfo.js';
 
 const page = document.querySelector('.page');
 
@@ -12,10 +19,10 @@ const profileJob = profile.querySelector('.profile__job');
 const profileAddButton = profile.querySelector('.profile__add-btn');
 const profileEditButton = profile.querySelector('.profile__edit-btn');
 
-// Находим попапы в DOM
-const popups = page.querySelectorAll('.popup');
-const popupEdit = page.querySelector('.popup_type_edit');
-const popupAdd = page.querySelector('.popup_type_add');
+// Попапы
+const popupWithImage = new PopupWithImage('.popup_type_pic')
+const popupEditSelector = document.querySelector('.popup_type_edit');
+const popupAddSelector = document.querySelector('.popup_type_add');
 
 // Находим формы
 const popupEditForm = page.querySelector('.popup__form_type_edit');
@@ -27,11 +34,7 @@ const jobInput = popupEditForm.querySelector('.popup__input_field_job');
 const titleInput = popupAddForm.querySelector('.popup__input_field_title');
 const linkInput = popupAddForm.querySelector('.popup__input_field_link');
 
-// Находим блок elements
-const elementsBlock = page.querySelector('.elements');
-
-// Валидатор формы редактирования профиля
-
+// Настройки валидации
 const config = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__submit',
@@ -41,66 +44,91 @@ const config = {
 }
 
 // Валидатор формы редактирования профиля
-const validatorEditForm = new FormValidator(config, popupEdit);
+const validatorEditForm = new FormValidator(config, popupEditSelector);
 
 // Валидатор формы добавления карточки
-const validatorAddForm = new FormValidator(config, popupAdd);
+const validatorAddForm = new FormValidator(config, popupAddSelector);
 
-// Вставляем значение из имени и работы в поля формы
-function insertText() {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-}
 
-// Обработчик «отправки» формы редактирования
-function submitEditForm(evt) {
-  evt.preventDefault();
+// // Вставляем значение из имени и работы в поля формы
+// function insertText() {
+//   nameInput.value = profileName.textContent;
+//   jobInput.value = profileJob.textContent;
+// }
 
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+// // Обработчик «отправки» формы редактирования
+// function submitEditForm(evt) {
+//   evt.preventDefault();
 
-  closePopup(popupEdit);
-}
+//   profileName.textContent = nameInput.value;
+//   profileJob.textContent = jobInput.value;
 
-// Обработчик «отправки» формы
-function submitAddForm(evt) {
-  evt.preventDefault();
+//   closePopup(popupEdit);
+// }
 
-  // Записываем данные инпутов в объект
-  const inputData = {
-    name: titleInput.value,
-    link: linkInput.value
+
+const cardSection = new Section({
+  items: initialCards,
+  renderer: (item) => {
+
+    const card = new Card({
+      data: item,
+      templateSelector: '#element-template',
+      handleCardClick: () => {
+        const popupWithImage = new PopupWithImage('.popup_type_pic', item.name, item.link)
+        popupWithImage.open()
+      }
+    });
+
+    const cardElement = card.generateCard();
+    cardSection.addItem(cardElement);
   }
+}, '.elements')
 
-  // Создаем карточку и закрываем попап
-  renderCard(inputData);
-  closePopup(popupAdd);
-  popupAddForm.reset();
-}
 
-// Создаем новую карточку и вставляем её в ДОМ
-function renderCard (data) {
-  const card = new Card (data, '#element-template');
-  const cardElement = card.generateCard();
+const popupAdd = new PopupWithForm({
+  popupSelector: '.popup_type_add',
+  handleFormSubmit: (formData) => {
 
-  elementsBlock.prepend(cardElement);
-}
+    const card = new Card({
+      data: formData,
+      templateSelector: '#element-template',
+      handleCardClick: () => {
+        const popupWithImage = new PopupWithImage('.popup_type_pic', formData.name, formData.link)
+        popupWithImage.open()
+      }
+    });
 
-// Вставляем начальные карточки
-initialCards.forEach((card) => {
-  renderCard(card);
+    const cardElement = card.generateCard();
+    cardSection.addItem(cardElement);
+  }
 });
+
+
+const popupEdit = new PopupWithForm({
+  popupSelector: '.popup_type_edit',
+  handleFormSubmit: () => {
+
+  }
+})
+
+const userInfo = new UserInfo({
+  name: '.profile__name',
+  job: '.profile__job'
+})
+userInfo.getUserInfo()
+
+cardSection.renderItems()
 
 // Прикрепляем обработчик к кнопке редактирования
 profileEditButton.addEventListener('click', () => {
-  openPopup(popupEdit);
-  insertText();
+  popupEdit.open();
   validatorEditForm.toggleButtonState();
 });
 
 // Прикрепляем обработчик к кнопке добавления
 profileAddButton.addEventListener('click', () => {
-  openPopup(popupAdd);
+  popupAdd.open();
   validatorAddForm.toggleButtonState();
 });
 
@@ -109,22 +137,7 @@ profileAddButton.addEventListener('click', () => {
 validatorEditForm.enableValidation();
 validatorAddForm.enableValidation();
 
-// Прикрепляем обработчик к кнопке "Сохранить"
-popupEditForm.addEventListener('submit', submitEditForm);
-
-// Прикрепляем обработчик к кнопке "Создать"
-popupAddForm.addEventListener('submit', submitAddForm);
-
-//Прикрепляем обработчик для закрытия попапа на оверлэй и крестика
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains('popup__close-image')) {
-      closePopup(popup);
-    }
-  })
-})
-
-
+// Включаем слушатели для попапов
+popupEdit.setEventListeners();
+popupAdd.setEventListeners();
+popupWithImage.setEventListeners();

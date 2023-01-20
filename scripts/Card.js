@@ -3,12 +3,13 @@ import { popupPic, popupImage, popupImageText } from "./utils.js";
 
 // Класс Card
 
-export class Card {
-  constructor(data, templateSelector) {
-    this._templateSelector = templateSelector;
+export default class Card {
+  constructor({ data, templateSelector, handleCardClick }) {
     this._name = data.name;
-    this._alt = data.title;
+    this._alt = data.name;
     this._link = data.link;
+    this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   // Получаем шаблон
@@ -35,11 +36,10 @@ export class Card {
 
     cardRemoveBtn.addEventListener('click', () => {
       this._removeCard();
-      this._element = null;
     });
 
     cardImage.addEventListener('click', () => {
-      this._openPopup();
+      this._handleCardClick();
     });
 
   }
@@ -52,16 +52,7 @@ export class Card {
   // Удаляем карточку
   _removeCard() {
     this._element.remove();
-  }
-
-  // Открываем попап
-  _openPopup() {
-
-    openPopup(popupPic);
-
-    popupImage.src = this._link;
-    popupImage.alt = this._name;
-    popupImageText.textContent = this._name;
+    this._element = null;
   }
 
   // Генерируем готовую карточку
