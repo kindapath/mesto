@@ -1,3 +1,4 @@
+// Класс Popup
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
@@ -20,6 +21,7 @@ export default class Popup {
     document.removeEventListener('keydown', this._handleEscClose);
   }
 
+  // Закрываем попап на Esc
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
       console.log('esc close!!')
@@ -27,6 +29,7 @@ export default class Popup {
     };
   }
 
+  // Устанавливаем слушатели
   setEventListeners() {
 
     this._popup.addEventListener('mousedown', (evt) => {

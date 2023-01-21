@@ -1,49 +1,39 @@
+// Импорт классов
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-import Popup from './Popup.js';
+import Popup from './Popup.js'
 import PopupWithForm from './PopupWithForm.js';
 import PopupWithImage from './PopupWithImage.js';
-
-import { initialCards } from './data.js';
-import { nameInput, jobInput } from './utils.js';
 import Section from './Section.js';
 import UserInfo from './UserInfo.js';
 
-const page = document.querySelector('.page');
+// Импорт данных и утилитов
+import { initialCards } from './data.js';
+import {
+  nameInput,
+  jobInput,
+  profileAddButton,
+  profileEditButton,
+  popupEditSelector,
+  popupAddSelector,
+  config
+} from './utils.js';
 
-// Находим профиль в DOM
-const profile = page.querySelector('.profile');
-const profileAddButton = profile.querySelector('.profile__add-btn');
-const profileEditButton = profile.querySelector('.profile__edit-btn');
-
-// Попапы
-const popupWithImage = new PopupWithImage('.popup_type_pic')
-const popupEditSelector = document.querySelector('.popup_type_edit');
-const popupAddSelector = document.querySelector('.popup_type_add');
-
-// Настройки валидации
-const config = {
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-}
-
-// Валидатор формы редактирования профиля
+// Валидатор формы редактирования профиля и добавления карточки
 const validatorEditForm = new FormValidator(config, popupEditSelector);
-
-// Валидатор формы добавления карточки
 const validatorAddForm = new FormValidator(config, popupAddSelector);
 
+// Создаем класс инормации польователя
 const userInfo = new UserInfo({
   name: '.profile__name',
   job: '.profile__job'
 })
 
+// Получаем информацию о пользователе
 const userDataName = userInfo.getUserInfo().name;
 const userDataJob = userInfo.getUserInfo().job;
 
+// Создаем секцию карточек
 const cardSection = new Section({
   items: initialCards,
   renderer: (item) => {
@@ -62,6 +52,8 @@ const cardSection = new Section({
   }
 }, '.elements')
 
+// Создаем попапы
+const popupWithImage = new PopupWithImage('.popup_type_pic')
 
 const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
@@ -89,6 +81,7 @@ const popupEdit = new PopupWithForm({
   }
 })
 
+// Рендерим секцию карточек
 cardSection.renderItems()
 
 // Прикрепляем обработчик к кнопке редактирования
