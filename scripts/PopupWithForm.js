@@ -8,6 +8,7 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
   }
 
+  // Получаем значения инпутов
   _getInputValues() {
     this._inputList = this._popup.querySelectorAll('.popup__input');
 
@@ -18,6 +19,7 @@ export default class PopupWithForm extends Popup {
     return this._formValues;
   }
 
+  // Устанавливаем слушатели родительского класса и сабмита
   setEventListeners() {
     super.setEventListeners();
 
@@ -31,6 +33,7 @@ export default class PopupWithForm extends Popup {
 
   }
 
+  // Закрываем попап и сбрасываем форму
   close() {
     super.close();
     this._form.reset();

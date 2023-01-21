@@ -1,7 +1,6 @@
 // Импорт классов
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-import Popup from './Popup.js'
 import PopupWithForm from './PopupWithForm.js';
 import PopupWithImage from './PopupWithImage.js';
 import Section from './Section.js';
