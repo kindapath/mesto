@@ -11,20 +11,20 @@ export default class Popup {
   open() {
     this._popup.classList.add(Popup.opened);
     // Прикрепляем обработчик для закрытия попапа на кнопку Esc
-    document.addEventListener('keydown', this._handleEscClose);
+    document.addEventListener('keydown', this._handleEscClose.bind(this));
   }
 
   // Закрываем попап
   close() {
     this._popup.classList.remove(Popup.opened);
     // Удаляем обработчик для закрытия попапа на кнопку Esc
-    document.removeEventListener('keydown', this._handleEscClose);
+    document.removeEventListener('keydown', this._handleEscClose.bind(this));
   }
 
   // Закрываем попап на Esc
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
-      console.log('esc close!!')
+      console.log(this)
       this.close();
     };
   }
