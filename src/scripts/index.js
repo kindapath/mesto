@@ -1,3 +1,5 @@
+import '../pages/index.css'
+
 // Импорт классов
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
