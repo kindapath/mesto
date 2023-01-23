@@ -22,19 +22,20 @@ export default class Card {
   // Устанавливаем слушатели
   _setEventListeners() {
 
-    const cardLikeBtn = this._element.querySelector('.element__like');
-    const cardRemoveBtn = this._element.querySelector('.element__remove');
-    const cardImage = this._element.querySelector('.element__image');
+    this._likeButton = this._element.querySelector('.element__like');
+    this._removeButton = this._element.querySelector('.element__remove');
+    this._cardImage = this._element.querySelector('.element__image');
+    this._cardTitle = this._element.querySelector('.element__title');
 
-    cardLikeBtn.addEventListener('click', () => {
+    this._likeButton.addEventListener('click', () => {
       this._toggleLike();
     });
 
-    cardRemoveBtn.addEventListener('click', () => {
+    this._removeButton.addEventListener('click', () => {
       this._removeCard();
     });
 
-    cardImage.addEventListener('click', () => {
+    this._cardImage.addEventListener('click', () => {
       this._handleCardClick();
     });
 
@@ -42,7 +43,7 @@ export default class Card {
 
   // Переключаем лайк на карточке
   _toggleLike() {
-    this._element.querySelector('.element__like').classList.toggle('element__like_active');
+    this._likeButton.classList.toggle('element__like_active');
   }
 
   // Удаляем карточку
@@ -56,9 +57,9 @@ export default class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
 
-    this._element.querySelector('.element__image').src = this._link;
-    this._element.querySelector('.element__image').alt = this._name;
-    this._element.querySelector('.element__title').textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
+    this._cardTitle.textContent = this._name;
 
     return this._element
   }

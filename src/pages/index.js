@@ -1,28 +1,32 @@
 import '../pages/index.css'
 
 // Импорт классов
-import Card from './Card.js';
-import FormValidator from './FormValidator.js';
-import PopupWithForm from './PopupWithForm.js';
-import PopupWithImage from './PopupWithImage.js';
-import Section from './Section.js';
-import UserInfo from './UserInfo.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
 
 // Импорт данных и утилитов
-import { initialCards } from './data.js';
+import { initialCards } from '../utils/data.js';
 import {
   nameInput,
   jobInput,
   profileAddButton,
   profileEditButton,
-  popupEditSelector,
-  popupAddSelector,
+  popupEditElement,
+  popupAddElement,
   config
-} from './utils.js';
+} from '../utils/constants.js';
+
+import {
+  createCard
+} from '../utils/utils';
 
 // Валидатор формы редактирования профиля и добавления карточки
-const validatorEditForm = new FormValidator(config, popupEditSelector);
-const validatorAddForm = new FormValidator(config, popupAddSelector);
+const validatorEditForm = new FormValidator(config, popupEditElement);
+const validatorAddForm = new FormValidator(config, popupAddElement);
 
 // Создаем класс инормации польователя
 const userInfo = new UserInfo({
@@ -30,46 +34,22 @@ const userInfo = new UserInfo({
   job: '.profile__job'
 })
 
-// Получаем информацию о пользователе
-const userDataName = userInfo.getUserInfo().name;
-const userDataJob = userInfo.getUserInfo().job;
-
 // Создаем секцию карточек
 const cardSection = new Section({
   items: initialCards,
   renderer: (item) => {
-
-    const card = new Card({
-      data: item,
-      templateSelector: '#element-template',
-      handleCardClick: () => {
-        const popupWithImage = new PopupWithImage('.popup_type_pic', item.name, item.link)
-        popupWithImage.open()
-      }
-    });
-
-    const cardElement = card.generateCard();
+    const cardElement = createCard(item);
     cardSection.addItem(cardElement);
   }
 }, '.elements')
 
 // Создаем попапы
-const popupWithImage = new PopupWithImage('.popup_type_pic')
+export const popupWithImage = new PopupWithImage('.popup_type_pic')
 
 const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   handleFormSubmit: (formData) => {
-
-    const card = new Card({
-      data: formData,
-      templateSelector: '#element-template',
-      handleCardClick: () => {
-        const popupWithImage = new PopupWithImage('.popup_type_pic', formData.name, formData.link)
-        popupWithImage.open()
-      }
-    });
-
-    const cardElement = card.generateCard();
+    const cardElement = createCard(formData);
     cardSection.addItem(cardElement);
   }
 });
@@ -77,8 +57,8 @@ const popupAdd = new PopupWithForm({
 
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
-  handleFormSubmit: () => {
-    userInfo.setUserInfo()
+  handleFormSubmit: (formData) => {
+    userInfo.setUserInfo(formData.name, formData.job);
   }
 })
 
@@ -90,16 +70,17 @@ profileEditButton.addEventListener('click', () => {
   popupEdit.open();
 
   // Вставляем значение из имени и работы в поля формы
-  nameInput.value = userDataName;
-  jobInput.value = userDataJob;
+  const { job, name } = userInfo.getUserInfo()
+  nameInput.value = name;
+  jobInput.value = job;
 
-  validatorEditForm.toggleButtonState();
+  validatorEditForm.resetValidation();
 });
 
 // Прикрепляем обработчик к кнопке добавления
 profileAddButton.addEventListener('click', () => {
   popupAdd.open();
-  validatorAddForm.toggleButtonState();
+  validatorAddForm.resetValidation();
 });
 
 // Активируем валидацию для форм

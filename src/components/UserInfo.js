@@ -1,4 +1,3 @@
-import { nameInput, jobInput } from './utils.js';
 
 // Клсс UserInfo
 export default class UserInfo {
@@ -17,8 +16,8 @@ export default class UserInfo {
   }
 
   // Вставляем информацию в профиль из инпутов
-  setUserInfo() {
-    this._name.textContent = nameInput.value
-    this._job.textContent = jobInput.value
+  setUserInfo(name, job) {
+    this._name.textContent = name;
+    this._job.textContent = job
   }
 }
