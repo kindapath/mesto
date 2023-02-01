@@ -1,23 +1,29 @@
 
-// Клсс UserInfo
+// Класс UserInfo
 export default class UserInfo {
-  constructor({ name, job }) {
+  constructor({ name, about, avatar }) {
     this._name = document.querySelector(name);
-    this._job = document.querySelector(job);
+    this._about = document.querySelector(about);
+    this._avatar = document.querySelector(avatar);
   }
 
   // Получаем информацию из профиля
   getUserInfo() {
     const userData = {
       name: this._name.textContent,
-      job: this._job.textContent
+      about: this._about.textContent
     }
     return userData
   }
 
   // Вставляем информацию в профиль из инпутов
-  setUserInfo(name, job) {
+  setUserInfo(name, about) {
     this._name.textContent = name;
-    this._job.textContent = job
+    this._about.textContent = about;
+
+  }
+
+  setUserAvatar(avatar) {
+    this._avatar.src = avatar
   }
 }

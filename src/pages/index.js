@@ -7,12 +7,11 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api';
 
 // Импорт данных и утилитов
 import { initialCards } from '../utils/data.js';
 import {
-  nameInput,
-  jobInput,
   profileAddButton,
   profileEditButton,
   popupEditElement,
@@ -31,7 +30,8 @@ const validatorAddForm = new FormValidator(config, popupAddElement);
 // Создаем класс инормации польователя
 const userInfo = new UserInfo({
   name: '.profile__name',
-  job: '.profile__job'
+  about: '.profile__job',
+  avatar: '.profile__avatar'
 })
 
 // Создаем секцию карточек
@@ -62,6 +62,33 @@ const popupEdit = new PopupWithForm({
   }
 })
 
+/// API
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59/users/me',
+  headers: {
+    authorization: 'fe2bb06d-e8a5-45a9-845b-99af7f5ece9e',
+    'Content-Type': 'application/json'
+  }
+});
+
+// cardApi.getInitialCards()
+
+const userApi = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59/users/me',
+  headers: {
+    authorization: 'fe2bb06d-e8a5-45a9-845b-99af7f5ece9e',
+    'Content-Type': 'application/json'
+  },
+  handleUserInfo: (name, about, avatar) => {
+    userInfo.setUserInfo(name, about)
+    userInfo.setUserAvatar(avatar)
+  }
+});
+
+userApi.getUserInfo()
+
+////
+
 // Рендерим секцию карточек
 cardSection.renderItems()
 
@@ -70,9 +97,8 @@ profileEditButton.addEventListener('click', () => {
   popupEdit.open();
 
   // Вставляем значение из имени и работы в поля формы
-  const { job, name } = userInfo.getUserInfo()
-  nameInput.value = name;
-  jobInput.value = job;
+  const { about, name } = userInfo.getUserInfo()
+  popupEdit.setInputValues({ about, name })
 
   validatorEditForm.resetValidation();
 });

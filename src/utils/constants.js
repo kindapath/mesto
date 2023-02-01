@@ -1,6 +1,3 @@
-// Инпуты
-const nameInput = document.querySelector('.popup__input_field_name');
-const jobInput = document.querySelector('.popup__input_field_job');
 
 // Находим профиль в DOM
 const profileAddButton = document.querySelector('.profile__add-btn');
@@ -20,8 +17,6 @@ const config = {
 }
 
 export {
-  nameInput,
-  jobInput,
   profileAddButton,
   profileEditButton,
   popupEditElement,
