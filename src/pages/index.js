@@ -10,7 +10,6 @@ import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api';
 
 // Импорт данных и утилитов
-import { initialCards } from '../utils/data.js';
 import {
   profileAddButton,
   profileEditButton,
@@ -22,6 +21,18 @@ import {
 import {
   createCard
 } from '../utils/utils';
+import { data } from 'autoprefixer';
+
+/// API
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
+  headers: {
+    authorization: 'fe2bb06d-e8a5-45a9-845b-99af7f5ece9e',
+    'Content-Type': 'application/json'
+  },
+});
+
 
 // Валидатор формы редактирования профиля и добавления карточки
 const validatorEditForm = new FormValidator(config, popupEditElement);
@@ -36,12 +47,13 @@ const userInfo = new UserInfo({
 
 // Создаем секцию карточек
 const cardSection = new Section({
-  items: initialCards,
   renderer: (item) => {
     const cardElement = createCard(item);
     cardSection.addItem(cardElement);
-  }
-}, '.elements')
+
+  },
+  containerSelector: '.elements'
+})
 
 // Создаем попапы
 export const popupWithImage = new PopupWithImage('.popup_type_pic')
@@ -62,35 +74,17 @@ const popupEdit = new PopupWithForm({
   }
 })
 
-/// API
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59/users/me',
-  headers: {
-    authorization: 'fe2bb06d-e8a5-45a9-845b-99af7f5ece9e',
-    'Content-Type': 'application/json'
-  }
-});
-
-// cardApi.getInitialCards()
-
-const userApi = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59/users/me',
-  headers: {
-    authorization: 'fe2bb06d-e8a5-45a9-845b-99af7f5ece9e',
-    'Content-Type': 'application/json'
-  },
-  handleUserInfo: (name, about, avatar) => {
-    userInfo.setUserInfo(name, about)
-    userInfo.setUserAvatar(avatar)
-  }
-});
-
-userApi.getUserInfo()
-
-////
+// Получаем информацию профиля с сервера
+api.getUserInfo()
+  .then((data) => {
+    userInfo.setUserInfo(data.name, data.about, data.avatar)
+  })
 
 // Рендерим секцию карточек
-cardSection.renderItems()
+api.getInitialCards()
+  .then((data) => {
+    cardSection.renderItems(data)
+  })
 
 // Прикрепляем обработчик к кнопке редактирования
 profileEditButton.addEventListener('click', () => {

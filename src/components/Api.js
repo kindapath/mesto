@@ -1,3 +1,5 @@
+import { data } from "autoprefixer";
+
 export default class Api {
   constructor({ baseUrl, headers, handleUserInfo }) {
     this._baseUrl = baseUrl;
@@ -7,7 +9,7 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(this._baseUrl, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: this._authorization
       }
@@ -16,14 +18,17 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-
         // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
+      })
+
+      .catch((err) => {
+        console.log(err);
       });
   }
 
   getUserInfo() {
-    return fetch(this._baseUrl, {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._authorization
       }
@@ -35,8 +40,8 @@ export default class Api {
         // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .then((data) => {
-        this._handleUserInfo(data.name, data.about, data.avatar)
-      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
