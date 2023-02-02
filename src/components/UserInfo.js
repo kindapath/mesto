@@ -17,9 +17,13 @@ export default class UserInfo {
   }
 
   // Вставляем информацию в профиль из инпутов
-  setUserInfo(name, about, avatar) {
+  setUserInfo(name, about) {
     this._name.textContent = name;
     this._about.textContent = about;
+
+  }
+
+  setUserAvatar(avatar) {
     this._avatar.src = avatar
   }
 }

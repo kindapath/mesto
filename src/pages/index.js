@@ -28,8 +28,7 @@ import { data } from 'autoprefixer';
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
   headers: {
-    authorization: 'fe2bb06d-e8a5-45a9-845b-99af7f5ece9e',
-    'Content-Type': 'application/json'
+    authorization: 'fe2bb06d-e8a5-45a9-845b-99af7f5ece9e'
   },
 });
 
@@ -62,6 +61,7 @@ const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   handleFormSubmit: (formData) => {
     const cardElement = createCard(formData);
+    api.addCard(formData.name, formData.link)
     cardSection.addItem(cardElement);
   }
 });
@@ -70,14 +70,18 @@ const popupAdd = new PopupWithForm({
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData.name, formData.job);
+    userInfo.setUserInfo(formData.name, formData.about);
+    api.updateUserInfo(formData.name, formData.about)
   }
 })
+
+
 
 // Получаем информацию профиля с сервера
 api.getUserInfo()
   .then((data) => {
-    userInfo.setUserInfo(data.name, data.about, data.avatar)
+    userInfo.setUserInfo(data.name, data.about)
+    userInfo.setUserAvatar(data.avatar)
   })
 
 // Рендерим секцию карточек
