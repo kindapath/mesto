@@ -1,6 +1,7 @@
 // Класс Card
 export default class Card {
   constructor({ data, templateSelector, handleCardClick }) {
+    this._data = data
     this._name = data.name;
     this._alt = data.name;
     this._link = data.link;
@@ -26,6 +27,7 @@ export default class Card {
     this._removeButton = this._element.querySelector('.element__remove');
     this._cardImage = this._element.querySelector('.element__image');
     this._cardTitle = this._element.querySelector('.element__title');
+    this._likesNumber = this._element.querySelector('.element__like-num');
 
     this._likeButton.addEventListener('click', () => {
       this._toggleLike();
@@ -60,6 +62,7 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._cardTitle.textContent = this._name;
+    this._likesNumber.textContent = this._data.likes.length
 
     return this._element
   }

@@ -21,7 +21,7 @@ import {
 import {
   createCard
 } from '../utils/utils';
-import { data } from 'autoprefixer';
+
 
 /// API
 
@@ -60,9 +60,12 @@ export const popupWithImage = new PopupWithImage('.popup_type_pic')
 const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   handleFormSubmit: (formData) => {
-    const cardElement = createCard(formData);
+
     api.addCard(formData.name, formData.link)
-    cardSection.addItem(cardElement);
+      .then((data) => {
+        const cardElement = createCard(data);
+        cardSection.addItem(cardElement);
+      })
   }
 });
 
