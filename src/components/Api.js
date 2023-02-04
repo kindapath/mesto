@@ -1,4 +1,4 @@
-import { data } from "autoprefixer";
+import { setTimeout } from "core-js";
 
 export default class Api {
   constructor({ baseUrl, headers }) {
@@ -70,7 +70,8 @@ export default class Api {
   }
 
   addCard(name, link) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return Promise.all([new Promise(res => setTimeout(res, 2000)),
+    fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: this._authorization, 'Content-Type': 'application/json'
@@ -80,13 +81,30 @@ export default class Api {
         link: link
       })
     })
-
       .then(res => {
         if (res.ok) {
-
           return res.json();
         }
 
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      })])
+  }
+
+  removeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      },
+    })
+
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
         // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })

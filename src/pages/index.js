@@ -3,8 +3,10 @@ import '../pages/index.css'
 // Импорт классов
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
+import Popup from '../components/Popup';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithConfirmation from '../components/PopupWithConfirmation';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api';
@@ -22,9 +24,14 @@ import {
   createCard
 } from '../utils/utils';
 
+export {
+  popupWithImage,
+  popupConfirm,
+  api,
+  userId
+}
 
 /// API
-
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-59',
   headers: {
@@ -32,6 +39,7 @@ const api = new Api({
   },
 });
 
+let userId
 
 // Валидатор формы редактирования профиля и добавления карточки
 const validatorEditForm = new FormValidator(config, popupEditElement);
@@ -54,22 +62,41 @@ const cardSection = new Section({
   containerSelector: '.elements'
 })
 
-// Создаем попапы
-export const popupWithImage = new PopupWithImage('.popup_type_pic')
+// Попап с картинкой
+const popupWithImage = new PopupWithImage('.popup_type_pic');
 
+// Попап подтверждения
+const popupConfirm = new PopupWithConfirmation({
+  popupSelector: '.popup_type_confirm',
+  handleSubmit: () => {
+
+  }
+});
+
+
+// Попап добавления карточки
 const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
   handleFormSubmit: (formData) => {
+    popupAdd.setButtonText('Создание...')
 
     api.addCard(formData.name, formData.link)
       .then((data) => {
+
         const cardElement = createCard(data);
         cardSection.addItem(cardElement);
+        popupAdd.close()
+      })
+      .catch(() => popupAdd.setButtonText('Ошибка запроса!'))
+      .finally(() => {
+        popupAdd.setButtonText('Cоздать')
       })
   }
 });
 
 
+
+// Попап редактирования профиля
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: (formData) => {
@@ -78,19 +105,18 @@ const popupEdit = new PopupWithForm({
   }
 })
 
+// Вызовы функций
 
-
-// Получаем информацию профиля с сервера
-api.getUserInfo()
+Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((data) => {
-    userInfo.setUserInfo(data.name, data.about)
-    userInfo.setUserAvatar(data.avatar)
-  })
+    console.log(data)
+    userId = data[0]._id
+    // Получаем информацию профиля с сервера
+    userInfo.setUserInfo(data[0].name, data[0].about)
+    userInfo.setUserAvatar(data[0].avatar)
 
-// Рендерим секцию карточек
-api.getInitialCards()
-  .then((data) => {
-    cardSection.renderItems(data)
+    // Рендерим секцию карточек
+    cardSection.renderItems(data[1])
   })
 
 // Прикрепляем обработчик к кнопке редактирования
@@ -103,6 +129,8 @@ profileEditButton.addEventListener('click', () => {
 
   validatorEditForm.resetValidation();
 });
+
+// Слушатели и обработчики
 
 // Прикрепляем обработчик к кнопке добавления
 profileAddButton.addEventListener('click', () => {
@@ -119,3 +147,4 @@ validatorAddForm.enableValidation();
 popupEdit.setEventListeners();
 popupAdd.setEventListeners();
 popupWithImage.setEventListeners();
+popupConfirm.setEventListeners();

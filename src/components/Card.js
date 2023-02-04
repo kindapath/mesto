@@ -1,12 +1,17 @@
 // Класс Card
 export default class Card {
-  constructor({ data, templateSelector, handleCardClick }) {
+  constructor({ data, templateSelector, handleCardClick, handleRmvBtnClick, handleLikeClick, userId }) {
     this._data = data
     this._name = data.name;
     this._alt = data.name;
     this._link = data.link;
+    this._userId = userId;
+    this._cardId = data._id;
+    this._cardOwner = data.owner._id
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleRmvBtnClick = handleRmvBtnClick;
+    this._handleLikeClick = handleLikeClick;
   }
 
   // Получаем шаблон
@@ -34,13 +39,22 @@ export default class Card {
     });
 
     this._removeButton.addEventListener('click', () => {
-      this._removeCard();
+      this._handleRmvBtnClick();
     });
 
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick();
     });
 
+    if (!this._checkOwner()) {
+      this._removeButton.remove()
+    }
+  }
+
+  _checkOwner() {
+    if (this._userId === this._cardOwner) {
+      return true
+    }
   }
 
   // Переключаем лайк на карточке
@@ -50,13 +64,13 @@ export default class Card {
 
   // Удаляем карточку
   _removeCard() {
-    this._element.remove();
-    this._element = null;
+    this._handleRmvBtnClick()
   }
 
   // Генерируем готовую карточку
   generateCard() {
     this._element = this._getTemplate();
+
     this._setEventListeners();
 
     this._cardImage.src = this._link;
