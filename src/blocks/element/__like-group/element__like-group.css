@@ -2,6 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 30px;
+  min-width: 30px;
   overflow: hidden;
 }

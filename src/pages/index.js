@@ -94,8 +94,6 @@ const popupAdd = new PopupWithForm({
   }
 });
 
-
-
 // Попап редактирования профиля
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
@@ -109,8 +107,8 @@ const popupEdit = new PopupWithForm({
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((data) => {
-    console.log(data)
     userId = data[0]._id
+
     // Получаем информацию профиля с сервера
     userInfo.setUserInfo(data[0].name, data[0].about)
     userInfo.setUserAvatar(data[0].avatar)
@@ -118,6 +116,9 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     // Рендерим секцию карточек
     cardSection.renderItems(data[1])
   })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Прикрепляем обработчик к кнопке редактирования
 profileEditButton.addEventListener('click', () => {

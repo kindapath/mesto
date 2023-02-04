@@ -1,10 +1,11 @@
 // Класс Card
 export default class Card {
-  constructor({ data, templateSelector, handleCardClick, handleRmvBtnClick, handleLikeClick, userId }) {
+  constructor({ data, templateSelector, handleCardClick, handleRmvBtnClick, handleLikeClick, handleRemoveLike, userId }) {
     this._data = data
     this._name = data.name;
     this._alt = data.name;
     this._link = data.link;
+    this._likes = data.likes
     this._userId = userId;
     this._cardId = data._id;
     this._cardOwner = data.owner._id
@@ -12,6 +13,7 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleRmvBtnClick = handleRmvBtnClick;
     this._handleLikeClick = handleLikeClick;
+    this._handleRemoveLike = handleRemoveLike;
   }
 
   // Получаем шаблон
@@ -34,12 +36,29 @@ export default class Card {
     this._cardTitle = this._element.querySelector('.element__title');
     this._likesNumber = this._element.querySelector('.element__like-num');
 
+    const isLiked = this._likes.find((owner) => {
+      return owner._id === this._userId
+    })
+
+    if (isLiked) {
+      this._toggleLike()
+    }
+
     this._likeButton.addEventListener('click', () => {
-      this._toggleLike();
+      if (isLiked) {
+        this._toggleLike();
+        this._handleRemoveLike(this._cardId)
+        //сейчас проверяется лайкнута ли карточка только один раз: когда карточка генерируется
+        // нужно чтобы проверка была каждый раз по клику
+      } else {
+        this._toggleLike();
+        this._handleLikeClick(this._cardId)
+      }
+
     });
 
     this._removeButton.addEventListener('click', () => {
-      this._handleRmvBtnClick();
+      this._handleRmvBtnClick(this._cardId);
     });
 
     this._cardImage.addEventListener('click', () => {
@@ -63,8 +82,9 @@ export default class Card {
   }
 
   // Удаляем карточку
-  _removeCard() {
-    this._handleRmvBtnClick()
+  removeCard() {
+    // this._element.remove()
+    console.log('remove')
   }
 
   // Генерируем готовую карточку
@@ -74,9 +94,9 @@ export default class Card {
     this._setEventListeners();
 
     this._cardImage.src = this._link;
-    this._cardImage.alt = this._name;
     this._cardTitle.textContent = this._name;
-    this._likesNumber.textContent = this._data.likes.length
+    this._cardImage.alt = this._name;
+    this._likesNumber.textContent = this._likes.length
 
     return this._element
   }

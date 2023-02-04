@@ -70,8 +70,7 @@ export default class Api {
   }
 
   addCard(name, link) {
-    return Promise.all([new Promise(res => setTimeout(res, 2000)),
-    fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: this._authorization, 'Content-Type': 'application/json'
@@ -90,11 +89,51 @@ export default class Api {
       })
       .catch((err) => {
         console.log(err);
-      })])
+      })
   }
 
   removeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization
+      },
+    })
+
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  likeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization
+      },
+    })
+
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  removeLikeCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization
