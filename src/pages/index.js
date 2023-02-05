@@ -15,7 +15,6 @@ import Api from '../components/Api';
 import {
   profileAddButton,
   profileEditButton,
-  profileAvatar,
   profileAvatarHover,
   popupEditElement,
   popupAddElement,
@@ -73,11 +72,11 @@ const popupWithImage = new PopupWithImage('.popup_type_pic');
 const popupConfirm = new PopupWithConfirmation({
   popupSelector: '.popup_type_confirm',
   handleSubmit: (id, element) => {
-    console.log('submit!!')
     api.removeCard(id)
       .then(() => {
         element.remove()
       })
+      .catch(err => console.log(err))
   }
 });
 
@@ -90,14 +89,19 @@ const popupAdd = new PopupWithForm({
 
     api.addCard(formData.name, formData.link)
       .then((data) => {
-
         const cardElement = createCard(data);
-        cardSection.addItem(cardElement);
-        popupAdd.close()
+        cardSection.prependItem(cardElement);
+        popupAdd.setButtonText('Выполнено успешно!');
+        setTimeout(() => {
+          popupAdd.close()
+        }, 1500);
+
       })
       .catch(() => popupAdd.setButtonText('Ошибка запроса!'))
       .finally(() => {
-        popupAdd.setButtonText('Cоздать')
+        setTimeout(() => {
+          popupAdd.setButtonText('Cоздать')
+        }, 2000);
       })
   }
 });
@@ -106,20 +110,46 @@ const popupAdd = new PopupWithForm({
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: (formData) => {
+    popupEdit.setButtonText('Сохранение...')
+
     api.updateUserInfo(formData.name, formData.about)
       .then(() => {
         userInfo.setUserInfo(formData.name, formData.about);
+
+        popupEdit.setButtonText('Выполнено успешно!');
+        setTimeout(() => {
+          popupEdit.close()
+        }, 1500);
+
       })
       .catch(err => console.log(err))
+      .finally(() => {
+        setTimeout(() => {
+          popupEdit.setButtonText('Сохранить')
+        }, 2000);
+      })
   }
 })
 
 const popupAvatar = new PopupWithForm({
   popupSelector: '.popup_type_avatar',
   handleFormSubmit: (formData) => {
+    popupAvatar.setButtonText('Сохранение...')
+
     api.updateAvatar(formData.link)
       .then(() => {
         userInfo.setUserAvatar(formData.link)
+
+        popupAvatar.setButtonText('Выполнено успешно!');
+        setTimeout(() => {
+          popupAvatar.close()
+        }, 1500);
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        setTimeout(() => {
+          popupAvatar.setButtonText('Сохранить')
+        }, 2000);
       })
   }
 })
@@ -137,9 +167,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     // Рендерим секцию карточек
     cardSection.renderItems(data[1])
   })
-  .catch((err) => {
-    console.log(err);
-  });
+  .catch(err => console.log(err))
+
 
 // Прикрепляем обработчик к кнопке редактирования
 profileEditButton.addEventListener('click', () => {

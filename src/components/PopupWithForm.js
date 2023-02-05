@@ -7,7 +7,7 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector('.popup__form');
     this._handleFormSubmit = handleFormSubmit;
     this._inputList = this._popup.querySelectorAll('.popup__input');
-    this._button = this._form.querySelector('.popup__submit')
+    this._submitButton = this._form.querySelector('.popup__submit')
   }
 
   // Получаем значения инпутов
@@ -28,7 +28,7 @@ export default class PopupWithForm extends Popup {
   }
 
   setButtonText(text) {
-    this._button.textContent = text
+    this._submitButton.textContent = text
   }
 
   // Устанавливаем слушатели родительского класса и сабмита
@@ -39,8 +39,6 @@ export default class PopupWithForm extends Popup {
       evt.preventDefault();
 
       this._handleFormSubmit(this._getInputValues());
-
-      this.close()
     })
 
   }

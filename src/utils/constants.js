@@ -3,7 +3,6 @@
 const profileAddButton = document.querySelector('.profile__add-btn');
 const profileEditButton = document.querySelector('.profile__edit-btn');
 const profileAvatarHover = document.querySelector('.profile__avatar-hover')
-const profileAvatar = document.querySelector('.profile__avatar')
 
 // Попапы
 const popupEditElement = document.querySelector('.popup_type_edit');
@@ -22,10 +21,9 @@ const config = {
 export {
   profileAddButton,
   profileEditButton,
-  profileAvatar,
   profileAvatarHover,
   popupEditElement,
   popupAddElement,
   popupAvatarElement,
-  config
+  config,
 }

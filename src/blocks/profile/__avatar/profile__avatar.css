@@ -1,15 +1,8 @@
 .profile__avatar {
-  max-width: 120px;
-  min-height: 120px;
-  max-height: 120px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border-radius: 50%;
-}
-
-@media screen and (max-width: 984px) {
-  .profile__avatar {
-    margin: 0;
-  }
 }
 
 .profile__avatar-hover {
@@ -37,4 +30,10 @@
 
 .profile__avatar-hover:hover::before {
   opacity: 0.8;
+}
+
+@media screen and (max-width: 984px) {
+  .profile__avatar-hover {
+    margin: 0;
+  }
 }

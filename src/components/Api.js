@@ -7,6 +7,7 @@ export default class Api {
     this._authorization = headers.authorization;
   }
 
+  // Получаем изначальные карточки
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
@@ -17,15 +18,12 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.log(err))
   }
 
+  // Получаем информацию о юзере
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
@@ -36,14 +34,11 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.log(err))
   }
-
+  // Обновляем информацию о юзере
   updateUserInfo(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -61,14 +56,12 @@ export default class Api {
 
           return res.json();
         }
-        // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.log(err))
   }
 
+  // Обновляем аватар
   updateAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
@@ -84,14 +77,12 @@ export default class Api {
 
           return res.json();
         }
-        // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.log(err))
   }
 
+  // Добавляем карточку
   addCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
@@ -107,14 +98,12 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch(err => console.log(err))
   }
 
+  // Удаляем карточку
   removeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
@@ -127,12 +116,9 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.log(err))
   }
 
   likeCard(cardId) {
@@ -147,12 +133,9 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.log(err))
   }
 
   removeLikeCard(cardId) {
@@ -167,11 +150,8 @@ export default class Api {
         if (res.ok) {
           return res.json();
         }
-        // если ошибка, отклоняем промис
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => console.log(err))
   }
 }
