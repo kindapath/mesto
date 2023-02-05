@@ -6,7 +6,7 @@ import {
   userId
 } from "../pages/index";
 
-
+// Создаем карточку
 function createCard(item) {
   const card = new Card({
     data: item,
@@ -17,11 +17,15 @@ function createCard(item) {
     handleRmvBtnClick: (id, element) => {
       popupConfirm.open(id, element)
     },
-    handleLikeClick: (id) => {
+    handleLikeClick: (id, likesNumber) => {
       api.likeCard(id)
-    },
-    handleRemoveLike: (id) => {
-      api.removeLikeCard(id)
+        .then((res) => {
+          likesNumber.textContent = res.likes.length
+        })
+      // api.removeLike(id)
+      //   .then((res) => {
+      //     likesNumber.textContent = res.likes.length
+      //   })
     },
     userId: userId
   });

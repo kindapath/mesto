@@ -41,6 +41,7 @@ const api = new Api({
   },
 });
 
+// Переменная с айди юзера
 let userId
 
 // Валидатор формы редактирования профиля и добавления карточки
@@ -131,6 +132,7 @@ const popupEdit = new PopupWithForm({
   }
 })
 
+// Попап редактирования аватара
 const popupAvatar = new PopupWithForm({
   popupSelector: '.popup_type_avatar',
   handleFormSubmit: (formData) => {
@@ -156,6 +158,7 @@ const popupAvatar = new PopupWithForm({
 
 // Вызовы функций
 
+// Получаем изачальную информацию с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((data) => {
     userId = data[0]._id
@@ -193,7 +196,6 @@ profileAddButton.addEventListener('click', () => {
 profileAvatarHover.addEventListener('click', () => {
   popupAvatar.open()
 })
-
 
 // Активируем валидацию для форм
 // редактирования профиля и добавления карточки

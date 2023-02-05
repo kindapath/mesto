@@ -121,6 +121,7 @@ export default class Api {
       .catch(err => console.log(err))
   }
 
+  // Ставим лайк
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
@@ -138,7 +139,8 @@ export default class Api {
       .catch(err => console.log(err))
   }
 
-  removeLikeCard(cardId) {
+  // Убираем лайк
+  removeLike(cardId) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: {

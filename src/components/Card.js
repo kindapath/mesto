@@ -13,7 +13,6 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleRmvBtnClick = handleRmvBtnClick;
     this._handleLikeClick = handleLikeClick;
-    this._handleRemoveLike = handleRemoveLike;
   }
 
   // Получаем шаблон
@@ -45,16 +44,8 @@ export default class Card {
     }
 
     this._likeButton.addEventListener('click', () => {
-      if (isLiked) {
         this._toggleLike();
-        this._handleRemoveLike(this._cardId)
-        //сейчас проверяется лайкнута ли карточка только один раз: когда карточка генерируется
-        // нужно чтобы проверка была каждый раз по клику
-      } else {
-        this._toggleLike();
-        this._handleLikeClick(this._cardId)
-      }
-
+        this._handleLikeClick(this._cardId, this._likesNumber)
     });
 
     this._removeButton.addEventListener('click', () => {
@@ -82,9 +73,8 @@ export default class Card {
   }
 
   // Удаляем карточку
-  removeCard() {
-    // this._element.remove()
-    console.log('remove')
+  deleteCard() {
+    this._element.remove()
   }
 
   // Генерируем готовую карточку

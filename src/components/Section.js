@@ -17,6 +17,7 @@ export default class Section {
     this._container.append(element)
   }
 
+  // Вставляем карточку в начало секции
   prependItem(element) {
     this._container.prepend(element)
   }

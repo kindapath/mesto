@@ -7,6 +7,7 @@ export default class PopupWithConfirmation extends Popup {
     this._form = this._popup.querySelector('.popup__form')
   }
 
+  // Уставнавливаем слушатели
   setEventListeners() {
     super.setEventListeners();
 
@@ -19,7 +20,7 @@ export default class PopupWithConfirmation extends Popup {
     })
 
   }
-
+  // Открываем и передаем айди и элемент карточки
   open(id, element) {
     super.open()
     this._cardId = id

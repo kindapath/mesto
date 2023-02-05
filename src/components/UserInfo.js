@@ -23,6 +23,7 @@ export default class UserInfo {
 
   }
 
+  // Устанаваливаем аватар
   setUserAvatar(avatar) {
     this._avatar.src = avatar
   }
