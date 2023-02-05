@@ -15,8 +15,11 @@ import Api from '../components/Api';
 import {
   profileAddButton,
   profileEditButton,
+  profileAvatar,
+  profileAvatarHover,
   popupEditElement,
   popupAddElement,
+  popupAvatarElement,
   config
 } from '../utils/constants.js';
 
@@ -44,6 +47,7 @@ let userId
 // Валидатор формы редактирования профиля и добавления карточки
 const validatorEditForm = new FormValidator(config, popupEditElement);
 const validatorAddForm = new FormValidator(config, popupAddElement);
+const validatorAvatarForm = new FormValidator(config, popupAvatarElement)
 
 // Создаем класс инормации польователя
 const userInfo = new UserInfo({
@@ -68,8 +72,12 @@ const popupWithImage = new PopupWithImage('.popup_type_pic');
 // Попап подтверждения
 const popupConfirm = new PopupWithConfirmation({
   popupSelector: '.popup_type_confirm',
-  handleSubmit: () => {
-
+  handleSubmit: (id, element) => {
+    console.log('submit!!')
+    api.removeCard(id)
+      .then(() => {
+        element.remove()
+      })
   }
 });
 
@@ -98,8 +106,21 @@ const popupAdd = new PopupWithForm({
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData.name, formData.about);
     api.updateUserInfo(formData.name, formData.about)
+      .then(() => {
+        userInfo.setUserInfo(formData.name, formData.about);
+      })
+      .catch(err => console.log(err))
+  }
+})
+
+const popupAvatar = new PopupWithForm({
+  popupSelector: '.popup_type_avatar',
+  handleFormSubmit: (formData) => {
+    api.updateAvatar(formData.link)
+      .then(() => {
+        userInfo.setUserAvatar(formData.link)
+      })
   }
 })
 
@@ -133,19 +154,27 @@ profileEditButton.addEventListener('click', () => {
 
 // Слушатели и обработчики
 
-// Прикрепляем обработчик к кнопке добавления
+// Прикрепляем обработчик к кнопке добавления карточки
 profileAddButton.addEventListener('click', () => {
   popupAdd.open();
   validatorAddForm.resetValidation();
 });
 
+// Прикрепляем слушатель к аватару
+profileAvatarHover.addEventListener('click', () => {
+  popupAvatar.open()
+})
+
+
 // Активируем валидацию для форм
 // редактирования профиля и добавления карточки
 validatorEditForm.enableValidation();
 validatorAddForm.enableValidation();
+validatorAvatarForm.enableValidation();
 
 // Включаем слушатели для попапов
 popupEdit.setEventListeners();
 popupAdd.setEventListeners();
 popupWithImage.setEventListeners();
 popupConfirm.setEventListeners();
+popupAvatar.setEventListeners();

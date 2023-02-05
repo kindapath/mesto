@@ -69,6 +69,29 @@ export default class Api {
       });
   }
 
+  updateAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._authorization, 'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+
+          return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   addCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',

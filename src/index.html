@@ -69,14 +69,39 @@
 
   </section>
 
-  <section class="popup popup_type_confirm">
-    <div class="popup__container popup__container_type_confirm">
+  <section class="popup popup_type_avatar">
 
-      <h2 class="popup__text popup__text_type_confirm">Вы уверены?</h2>
+    <div class="popup__container popup__container_type_avatar">
+
+      <h2 class="popup__text">Обновить аватар</h2>
+
       <button class="popup__close" type="button">
         <img class="popup__close-image" src="<%=require('./images/popup__close-icon.svg')%>" alt="Иконка закрытия">
       </button>
-      <button class="popup__submit" type="submit">Да</button>
+
+      <form class="popup__form popup__form_type_avatar">
+
+        <input class="popup__input popup__input_field_link" name="link" type="url" id="link-input"
+          placeholder="Ссылка на картинку" required>
+        <span class="popup__input-error link-input-error"></span>
+
+        <button class="popup__submit" type="submit">Сохранить</button>
+      </form>
+
+    </div>
+
+  </section>
+
+  <section class="popup popup_type_confirm">
+    <div class="popup__container popup__container_type_confirm">
+
+      <form class="popup__form popup__form_type_confirm">
+        <h2 class="popup__text popup__text_type_confirm">Вы уверены?</h2>
+        <button class="popup__close" type="button">
+          <img class="popup__close-image" src="<%=require('./images/popup__close-icon.svg')%>" alt="Иконка закрытия">
+        </button>
+        <button class="popup__submit" type="submit">Да</button>
+      </form>
 
     </div>
   </section>
@@ -100,7 +125,8 @@
   <main class="content page__content">
 
     <section class="profile content__profile">
-      <div class="profile__avatar-hover"><img class="profile__avatar" src="<%=require('./images/profile__avatar_vin.gif')%>" alt="Фотография профиля"></div>
+      <div class="profile__avatar-hover"><img class="profile__avatar"
+          src="<%=require('./images/profile__avatar_vin.gif')%>" alt="Фотография профиля"></div>
       <div class="profile__info">
         <h1 class="profile__name">Вин Дизель</h1>
         <button class="profile__edit-btn" type="button"></button>

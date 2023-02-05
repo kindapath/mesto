@@ -14,11 +14,8 @@ function createCard(item) {
     handleCardClick: () => {
       popupWithImage.open(item.name, item.link)
     },
-    handleRmvBtnClick: (id) => {
-      popupConfirm.open()
-
-      api.removeCard(id)
-
+    handleRmvBtnClick: (id, element) => {
+      popupConfirm.open(id, element)
     },
     handleLikeClick: (id) => {
       api.likeCard(id)

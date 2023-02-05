@@ -58,7 +58,7 @@ export default class Card {
     });
 
     this._removeButton.addEventListener('click', () => {
-      this._handleRmvBtnClick(this._cardId);
+      this._handleRmvBtnClick(this._cardId, this._element);
     });
 
     this._cardImage.addEventListener('click', () => {
