@@ -24,12 +24,14 @@ function createCard(item) {
             card.setLikesNumber(res)
             card.toggleLike()
           })
+          .catch(err => console.log(err))
       } else {
         api.likeCard(id)
           .then((res) => {
             card.setLikesNumber(res)
             card.toggleLike()
           })
+          .catch(err => console.log(err))
       }
     },
     userId: userId
