@@ -17,15 +17,20 @@ function createCard(item) {
     handleRmvBtnClick: (id, element) => {
       popupConfirm.open(id, element)
     },
-    handleLikeClick: (id, likesNumber) => {
-      api.likeCard(id)
-        .then((res) => {
-          likesNumber.textContent = res.likes.length
-        })
-      // api.removeLike(id)
-      //   .then((res) => {
-      //     likesNumber.textContent = res.likes.length
-      //   })
+    handleLikeClick: (id) => {
+      if (card.isLiked()) {
+        api.removeLike(id)
+          .then((res) => {
+            card.setLikesNumber(res)
+            card.toggleLike()
+          })
+      } else {
+        api.likeCard(id)
+          .then((res) => {
+            card.setLikesNumber(res)
+            card.toggleLike()
+          })
+      }
     },
     userId: userId
   });

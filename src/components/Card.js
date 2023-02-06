@@ -1,6 +1,6 @@
 // Класс Card
 export default class Card {
-  constructor({ data, templateSelector, handleCardClick, handleRmvBtnClick, handleLikeClick, handleRemoveLike, userId }) {
+  constructor({ data, templateSelector, handleCardClick, handleRmvBtnClick, handleLikeClick, userId }) {
     this._data = data
     this._name = data.name;
     this._alt = data.name;
@@ -35,17 +35,13 @@ export default class Card {
     this._cardTitle = this._element.querySelector('.element__title');
     this._likesNumber = this._element.querySelector('.element__like-num');
 
-    const isLiked = this._likes.find((owner) => {
-      return owner._id === this._userId
-    })
-
-    if (isLiked) {
-      this._toggleLike()
+    // Выставляем изначальные лайки
+    if (this.isLiked()) {
+      this.toggleLike()
     }
 
     this._likeButton.addEventListener('click', () => {
-        this._toggleLike();
-        this._handleLikeClick(this._cardId, this._likesNumber)
+      this._handleLikeClick(this._cardId)
     });
 
     this._removeButton.addEventListener('click', () => {
@@ -61,6 +57,18 @@ export default class Card {
     }
   }
 
+  // Проверяем лайкнута ли карточка юзером
+  isLiked() {
+    const myLike = this._likes.some((like) => like._id === this._userId)
+    return myLike
+  }
+
+  // Выставляем количество лайков
+  setLikesNumber(arr) {
+    this._likesNumber.textContent = arr.likes.length
+  }
+
+  // Проверяем владельца
   _checkOwner() {
     if (this._userId === this._cardOwner) {
       return true
@@ -68,7 +76,7 @@ export default class Card {
   }
 
   // Переключаем лайк на карточке
-  _toggleLike() {
+  toggleLike() {
     this._likeButton.classList.toggle('element__like_active');
   }
 
