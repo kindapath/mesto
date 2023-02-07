@@ -76,6 +76,7 @@ const popupConfirm = new PopupWithConfirmation({
     api.removeCard(id)
       .then(() => {
         element.remove()
+        popupConfirm.close()
       })
       .catch(err => console.log(err))
   }
@@ -85,80 +86,37 @@ const popupConfirm = new PopupWithConfirmation({
 // Попап добавления карточки
 const popupAdd = new PopupWithForm({
   popupSelector: '.popup_type_add',
-  handleFormSubmit: (formData) => {
-    popupAdd.setButtonText('Создание...')
-
+  handleFormSubmit: (formData) =>
     api.addCard(formData.name, formData.link)
       .then((data) => {
         const cardElement = createCard(data);
         cardSection.prependItem(cardElement);
-        popupAdd.setButtonText('Выполнено успешно!');
-        setTimeout(() => {
-          popupAdd.close()
-        }, 1500);
-
       })
-      .catch(() => popupAdd.setButtonText('Ошибка запроса!'))
-      .finally(() => {
-        setTimeout(() => {
-          popupAdd.setButtonText('Cоздать')
-        }, 2000);
-      })
-  }
 });
 
 // Попап редактирования профиля
 const popupEdit = new PopupWithForm({
   popupSelector: '.popup_type_edit',
-  handleFormSubmit: (formData) => {
-    popupEdit.setButtonText('Сохранение...')
-
+  handleFormSubmit: (formData) =>
     api.updateUserInfo(formData.name, formData.about)
       .then(() => {
-        userInfo.setUserInfo(formData.name, formData.about);
-
-        popupEdit.setButtonText('Выполнено успешно!');
-        setTimeout(() => {
-          popupEdit.close()
-        }, 1500);
-
+        userInfo.setUserInfo(formData.name, formData.about)
       })
-      .catch(err => console.log(err))
-      .finally(() => {
-        setTimeout(() => {
-          popupEdit.setButtonText('Сохранить')
-        }, 2000);
-      })
-  }
 })
 
 // Попап редактирования аватара
 const popupAvatar = new PopupWithForm({
   popupSelector: '.popup_type_avatar',
-  handleFormSubmit: (formData) => {
-    popupAvatar.setButtonText('Сохранение...')
-
+  handleFormSubmit: (formData) =>
     api.updateAvatar(formData.link)
       .then(() => {
         userInfo.setUserAvatar(formData.link)
-
-        popupAvatar.setButtonText('Выполнено успешно!');
-        setTimeout(() => {
-          popupAvatar.close()
-        }, 1500);
       })
-      .catch(err => console.log(err))
-      .finally(() => {
-        setTimeout(() => {
-          popupAvatar.setButtonText('Сохранить')
-        }, 2000);
-      })
-  }
 })
 
 // Вызовы функций
 
-// Получаем изачальную информацию с сервера
+// Получаем изначальную информацию с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then((data) => {
     userId = data[0]._id
@@ -195,6 +153,7 @@ profileAddButton.addEventListener('click', () => {
 // Прикрепляем слушатель к аватару
 profileAvatarHover.addEventListener('click', () => {
   popupAvatar.open()
+  validatorAvatarForm.resetValidation();
 })
 
 // Активируем валидацию для форм

@@ -24,7 +24,6 @@ export default class Api {
       }
     })
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
 
   // Получаем информацию о юзере
@@ -35,7 +34,6 @@ export default class Api {
       }
     })
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
   // Обновляем информацию о юзере
   updateUserInfo(name, about) {
@@ -51,7 +49,6 @@ export default class Api {
     })
 
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
 
   // Обновляем аватар
@@ -66,7 +63,6 @@ export default class Api {
       })
     })
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
 
   // Добавляем карточку
@@ -82,7 +78,6 @@ export default class Api {
       })
     })
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
 
   // Удаляем карточку
@@ -95,7 +90,6 @@ export default class Api {
     })
 
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
 
   // Ставим лайк
@@ -108,7 +102,6 @@ export default class Api {
     })
 
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
 
   // Убираем лайк
@@ -121,6 +114,5 @@ export default class Api {
     })
 
       .then(this._checkResponse)
-      .catch(err => console.log(err))
   }
 }

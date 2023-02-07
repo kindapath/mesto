@@ -16,7 +16,6 @@ export default class PopupWithConfirmation extends Popup {
 
       this._handleSubmit(this._cardId, this._element);
 
-      this.close();
     })
 
   }
